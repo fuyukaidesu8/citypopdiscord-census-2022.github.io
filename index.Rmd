@@ -139,6 +139,8 @@ census_final = census_df_5 %>%
 
 ```
 
+Survey conducted between December 25, 2022 and January 2, 2023. A total of 217 server members responded.
+
 # Demographics
 
 ## Age
