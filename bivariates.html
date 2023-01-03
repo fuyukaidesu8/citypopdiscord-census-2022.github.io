@@ -28,6 +28,9 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
@@ -225,6 +228,69 @@ $(document).ready(function () {
 
 
 
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
 
 </head>
 
@@ -232,6 +298,16 @@ $(document).ready(function () {
 
 
 <div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -274,10 +350,2817 @@ $(document).ready(function () {
 </div>
 
 
-<p>Under construction.</p>
+<p><strong>Under construction</strong></p>
+<div id="age-group-comparisons" class="section level1">
+<h1>Age group comparisons</h1>
+<div id="interaction-with-city-pop" class="section level2">
+<h2>Interaction with city pop</h2>
+<div id="where-discovered-city-pop" class="section level3 tabset">
+<h3>Where discovered city pop</h3>
+<div id="graph" class="section level4">
+<h4>Graph</h4>
+<p><img src="bivariates_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+</div>
+<div id="table" class="section level4">
+<h4>Table</h4>
+<table>
+<thead>
+<tr class="header">
+<th align="left">age</th>
+<th align="left">know_first</th>
+<th align="right">n</th>
+<th align="left">percent</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">13-16</td>
+<td align="left">YouTube recommendations</td>
+<td align="right">21</td>
+<td align="left">80.8%</td>
+</tr>
+<tr class="even">
+<td align="left">13-16</td>
+<td align="left">TikTok</td>
+<td align="right">5</td>
+<td align="left">19.2%</td>
+</tr>
+<tr class="odd">
+<td align="left">13-16</td>
+<td align="left">Heard it in a TV show/anime/movie</td>
+<td align="right">4</td>
+<td align="left">15.4%</td>
+</tr>
+<tr class="even">
+<td align="left">13-16</td>
+<td align="left">Heard it in a mix</td>
+<td align="right">4</td>
+<td align="left">15.4%</td>
+</tr>
+<tr class="odd">
+<td align="left">13-16</td>
+<td align="left">Heard it in a meme/referenced in a meme</td>
+<td align="right">7</td>
+<td align="left">26.9%</td>
+</tr>
+<tr class="even">
+<td align="left">13-16</td>
+<td align="left">Through samples in mainstream music</td>
+<td align="right">1</td>
+<td align="left">3.8%</td>
+</tr>
+<tr class="odd">
+<td align="left">13-16</td>
+<td align="left">Through vaporwave/future funk</td>
+<td align="right">8</td>
+<td align="left">30.8%</td>
+</tr>
+<tr class="even">
+<td align="left">13-16</td>
+<td align="left">Discogs/RYM/other digging sites</td>
+<td align="right">4</td>
+<td align="left">15.4%</td>
+</tr>
+<tr class="odd">
+<td align="left">13-16</td>
+<td align="left">Recommended by a friend/someone else</td>
+<td align="right">7</td>
+<td align="left">26.9%</td>
+</tr>
+<tr class="even">
+<td align="left">13-16</td>
+<td align="left">Grew up listening to it</td>
+<td align="right">1</td>
+<td align="left">3.8%</td>
+</tr>
+<tr class="odd">
+<td align="left">13-16</td>
+<td align="left">Other</td>
+<td align="right">1</td>
+<td align="left">3.8%</td>
+</tr>
+<tr class="even">
+<td align="left">17-20</td>
+<td align="left">YouTube recommendations</td>
+<td align="right">56</td>
+<td align="left">75.7%</td>
+</tr>
+<tr class="odd">
+<td align="left">17-20</td>
+<td align="left">TikTok</td>
+<td align="right">7</td>
+<td align="left">9.5%</td>
+</tr>
+<tr class="even">
+<td align="left">17-20</td>
+<td align="left">Heard it in a TV show/anime/movie</td>
+<td align="right">6</td>
+<td align="left">8.1%</td>
+</tr>
+<tr class="odd">
+<td align="left">17-20</td>
+<td align="left">Heard it in a mix</td>
+<td align="right">11</td>
+<td align="left">14.9%</td>
+</tr>
+<tr class="even">
+<td align="left">17-20</td>
+<td align="left">Heard it in a meme/referenced in a meme</td>
+<td align="right">10</td>
+<td align="left">13.5%</td>
+</tr>
+<tr class="odd">
+<td align="left">17-20</td>
+<td align="left">Through vaporwave/future funk</td>
+<td align="right">20</td>
+<td align="left">27%</td>
+</tr>
+<tr class="even">
+<td align="left">17-20</td>
+<td align="left">Discogs/RYM/other digging sites</td>
+<td align="right">4</td>
+<td align="left">5.4%</td>
+</tr>
+<tr class="odd">
+<td align="left">17-20</td>
+<td align="left">Recommended by a friend/someone else</td>
+<td align="right">9</td>
+<td align="left">12.2%</td>
+</tr>
+<tr class="even">
+<td align="left">17-20</td>
+<td align="left">Grew up listening to it</td>
+<td align="right">2</td>
+<td align="left">2.7%</td>
+</tr>
+<tr class="odd">
+<td align="left">17-20</td>
+<td align="left">Other</td>
+<td align="right">1</td>
+<td align="left">1.4%</td>
+</tr>
+<tr class="even">
+<td align="left">17-20</td>
+<td align="left">Other</td>
+<td align="right">1</td>
+<td align="left">1.4%</td>
+</tr>
+<tr class="odd">
+<td align="left">17-20</td>
+<td align="left">Other</td>
+<td align="right">1</td>
+<td align="left">1.4%</td>
+</tr>
+<tr class="even">
+<td align="left">17-20</td>
+<td align="left">Other</td>
+<td align="right">1</td>
+<td align="left">1.4%</td>
+</tr>
+<tr class="odd">
+<td align="left">17-20</td>
+<td align="left">Other</td>
+<td align="right">1</td>
+<td align="left">1.4%</td>
+</tr>
+<tr class="even">
+<td align="left">17-20</td>
+<td align="left">Other</td>
+<td align="right">1</td>
+<td align="left">1.4%</td>
+</tr>
+<tr class="odd">
+<td align="left">21-24</td>
+<td align="left">YouTube recommendations</td>
+<td align="right">38</td>
+<td align="left">70.4%</td>
+</tr>
+<tr class="even">
+<td align="left">21-24</td>
+<td align="left">Heard it in a TV show/anime/movie</td>
+<td align="right">9</td>
+<td align="left">16.7%</td>
+</tr>
+<tr class="odd">
+<td align="left">21-24</td>
+<td align="left">Heard it in a mix</td>
+<td align="right">13</td>
+<td align="left">24.1%</td>
+</tr>
+<tr class="even">
+<td align="left">21-24</td>
+<td align="left">Heard it in a meme/referenced in a meme</td>
+<td align="right">8</td>
+<td align="left">14.8%</td>
+</tr>
+<tr class="odd">
+<td align="left">21-24</td>
+<td align="left">Through samples in mainstream music</td>
+<td align="right">6</td>
+<td align="left">11.1%</td>
+</tr>
+<tr class="even">
+<td align="left">21-24</td>
+<td align="left">Through vaporwave/future funk</td>
+<td align="right">23</td>
+<td align="left">42.6%</td>
+</tr>
+<tr class="odd">
+<td align="left">21-24</td>
+<td align="left">Discogs/RYM/other digging sites</td>
+<td align="right">6</td>
+<td align="left">11.1%</td>
+</tr>
+<tr class="even">
+<td align="left">21-24</td>
+<td align="left">Digging in a record store</td>
+<td align="right">2</td>
+<td align="left">3.7%</td>
+</tr>
+<tr class="odd">
+<td align="left">21-24</td>
+<td align="left">Recommended by a friend/someone else</td>
+<td align="right">9</td>
+<td align="left">16.7%</td>
+</tr>
+<tr class="even">
+<td align="left">21-24</td>
+<td align="left">Grew up listening to it</td>
+<td align="right">2</td>
+<td align="left">3.7%</td>
+</tr>
+<tr class="odd">
+<td align="left">21-24</td>
+<td align="left">Other</td>
+<td align="right">1</td>
+<td align="left">1.9%</td>
+</tr>
+<tr class="even">
+<td align="left">21-24</td>
+<td align="left">Other</td>
+<td align="right">1</td>
+<td align="left">1.9%</td>
+</tr>
+<tr class="odd">
+<td align="left">21-24</td>
+<td align="left">Other</td>
+<td align="right">1</td>
+<td align="left">1.9%</td>
+</tr>
+<tr class="even">
+<td align="left">21-24</td>
+<td align="left">Other</td>
+<td align="right">1</td>
+<td align="left">1.9%</td>
+</tr>
+<tr class="odd">
+<td align="left">21-24</td>
+<td align="left">Other</td>
+<td align="right">1</td>
+<td align="left">1.9%</td>
+</tr>
+<tr class="even">
+<td align="left">21-24</td>
+<td align="left">Other</td>
+<td align="right">1</td>
+<td align="left">1.9%</td>
+</tr>
+<tr class="odd">
+<td align="left">21-24</td>
+<td align="left">Other</td>
+<td align="right">1</td>
+<td align="left">1.9%</td>
+</tr>
+<tr class="even">
+<td align="left">21-24</td>
+<td align="left">Other</td>
+<td align="right">1</td>
+<td align="left">1.9%</td>
+</tr>
+<tr class="odd">
+<td align="left">25-29</td>
+<td align="left">YouTube recommendations</td>
+<td align="right">16</td>
+<td align="left">55.2%</td>
+</tr>
+<tr class="even">
+<td align="left">25-29</td>
+<td align="left">Heard it in a TV show/anime/movie</td>
+<td align="right">2</td>
+<td align="left">6.9%</td>
+</tr>
+<tr class="odd">
+<td align="left">25-29</td>
+<td align="left">Heard it in a mix</td>
+<td align="right">2</td>
+<td align="left">6.9%</td>
+</tr>
+<tr class="even">
+<td align="left">25-29</td>
+<td align="left">Heard it in a meme/referenced in a meme</td>
+<td align="right">1</td>
+<td align="left">3.4%</td>
+</tr>
+<tr class="odd">
+<td align="left">25-29</td>
+<td align="left">Through vaporwave/future funk</td>
+<td align="right">9</td>
+<td align="left">31%</td>
+</tr>
+<tr class="even">
+<td align="left">25-29</td>
+<td align="left">Discogs/RYM/other digging sites</td>
+<td align="right">7</td>
+<td align="left">24.1%</td>
+</tr>
+<tr class="odd">
+<td align="left">25-29</td>
+<td align="left">Digging in a record store</td>
+<td align="right">1</td>
+<td align="left">3.4%</td>
+</tr>
+<tr class="even">
+<td align="left">25-29</td>
+<td align="left">Recommended by a friend/someone else</td>
+<td align="right">8</td>
+<td align="left">27.6%</td>
+</tr>
+<tr class="odd">
+<td align="left">25-29</td>
+<td align="left">Other</td>
+<td align="right">1</td>
+<td align="left">3.4%</td>
+</tr>
+<tr class="even">
+<td align="left">30-33</td>
+<td align="left">YouTube recommendations</td>
+<td align="right">9</td>
+<td align="left">69.2%</td>
+</tr>
+<tr class="odd">
+<td align="left">30-33</td>
+<td align="left">Heard it in a TV show/anime/movie</td>
+<td align="right">6</td>
+<td align="left">46.2%</td>
+</tr>
+<tr class="even">
+<td align="left">30-33</td>
+<td align="left">Heard it in a mix</td>
+<td align="right">3</td>
+<td align="left">23.1%</td>
+</tr>
+<tr class="odd">
+<td align="left">30-33</td>
+<td align="left">Through samples in mainstream music</td>
+<td align="right">2</td>
+<td align="left">15.4%</td>
+</tr>
+<tr class="even">
+<td align="left">30-33</td>
+<td align="left">Through vaporwave/future funk</td>
+<td align="right">5</td>
+<td align="left">38.5%</td>
+</tr>
+<tr class="odd">
+<td align="left">30-33</td>
+<td align="left">Discogs/RYM/other digging sites</td>
+<td align="right">2</td>
+<td align="left">15.4%</td>
+</tr>
+<tr class="even">
+<td align="left">30-33</td>
+<td align="left">Recommended by a friend/someone else</td>
+<td align="right">2</td>
+<td align="left">15.4%</td>
+</tr>
+<tr class="odd">
+<td align="left">30-33</td>
+<td align="left">Grew up listening to it</td>
+<td align="right">2</td>
+<td align="left">15.4%</td>
+</tr>
+<tr class="even">
+<td align="left">&gt;33</td>
+<td align="left">YouTube recommendations</td>
+<td align="right">8</td>
+<td align="left">42.1%</td>
+</tr>
+<tr class="odd">
+<td align="left">&gt;33</td>
+<td align="left">TikTok</td>
+<td align="right">1</td>
+<td align="left">5.3%</td>
+</tr>
+<tr class="even">
+<td align="left">&gt;33</td>
+<td align="left">Heard it in a TV show/anime/movie</td>
+<td align="right">4</td>
+<td align="left">21.1%</td>
+</tr>
+<tr class="odd">
+<td align="left">&gt;33</td>
+<td align="left">Heard it in a mix</td>
+<td align="right">3</td>
+<td align="left">15.8%</td>
+</tr>
+<tr class="even">
+<td align="left">&gt;33</td>
+<td align="left">Through samples in mainstream music</td>
+<td align="right">1</td>
+<td align="left">5.3%</td>
+</tr>
+<tr class="odd">
+<td align="left">&gt;33</td>
+<td align="left">Through vaporwave/future funk</td>
+<td align="right">4</td>
+<td align="left">21.1%</td>
+</tr>
+<tr class="even">
+<td align="left">&gt;33</td>
+<td align="left">Discogs/RYM/other digging sites</td>
+<td align="right">2</td>
+<td align="left">10.5%</td>
+</tr>
+<tr class="odd">
+<td align="left">&gt;33</td>
+<td align="left">Digging in a record store</td>
+<td align="right">2</td>
+<td align="left">10.5%</td>
+</tr>
+<tr class="even">
+<td align="left">&gt;33</td>
+<td align="left">Recommended by a friend/someone else</td>
+<td align="right">5</td>
+<td align="left">26.3%</td>
+</tr>
+<tr class="odd">
+<td align="left">&gt;33</td>
+<td align="left">Grew up listening to it</td>
+<td align="right">1</td>
+<td align="left">5.3%</td>
+</tr>
+<tr class="even">
+<td align="left">&gt;33</td>
+<td align="left">Other</td>
+<td align="right">1</td>
+<td align="left">5.3%</td>
+</tr>
+<tr class="odd">
+<td align="left">&gt;33</td>
+<td align="left">Other</td>
+<td align="right">1</td>
+<td align="left">5.3%</td>
+</tr>
+<tr class="even">
+<td align="left">&gt;33</td>
+<td align="left">Other</td>
+<td align="right">1</td>
+<td align="left">5.3%</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="where-one-listens-to-city-pop" class="section level3 tabset">
+<h3>Where one listens to city pop</h3>
+<div id="graph-1" class="section level4">
+<h4>Graph</h4>
+<p><img src="bivariates_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+</div>
+<div id="table-1" class="section level4">
+<h4>Table</h4>
+<table>
+<thead>
+<tr class="header">
+<th align="left">age</th>
+<th align="left">listen_where</th>
+<th align="right">n</th>
+<th align="left">percent</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">13-16</td>
+<td align="left">Streaming services</td>
+<td align="right">20</td>
+<td align="left">76.9%</td>
+</tr>
+<tr class="even">
+<td align="left">13-16</td>
+<td align="left">Video sites</td>
+<td align="right">19</td>
+<td align="left">73.1%</td>
+</tr>
+<tr class="odd">
+<td align="left">13-16</td>
+<td align="left">Physical media</td>
+<td align="right">7</td>
+<td align="left">26.9%</td>
+</tr>
+<tr class="even">
+<td align="left">13-16</td>
+<td align="left">JPOP80SS</td>
+<td align="right">10</td>
+<td align="left">38.5%</td>
+</tr>
+<tr class="odd">
+<td align="left">13-16</td>
+<td align="left">Soulseek</td>
+<td align="right">7</td>
+<td align="left">26.9%</td>
+</tr>
+<tr class="even">
+<td align="left">13-16</td>
+<td align="left">Torr- [redacted]</td>
+<td align="right">7</td>
+<td align="left">26.9%</td>
+</tr>
+<tr class="odd">
+<td align="left">13-16</td>
+<td align="left">Mix/Web radio</td>
+<td align="right">3</td>
+<td align="left">11.5%</td>
+</tr>
+<tr class="even">
+<td align="left">13-16</td>
+<td align="left">Purchased digital files</td>
+<td align="right">1</td>
+<td align="left">3.8%</td>
+</tr>
+<tr class="odd">
+<td align="left">17-20</td>
+<td align="left">Streaming services</td>
+<td align="right">60</td>
+<td align="left">81.1%</td>
+</tr>
+<tr class="even">
+<td align="left">17-20</td>
+<td align="left">Video sites</td>
+<td align="right">59</td>
+<td align="left">79.7%</td>
+</tr>
+<tr class="odd">
+<td align="left">17-20</td>
+<td align="left">Physical media</td>
+<td align="right">30</td>
+<td align="left">40.5%</td>
+</tr>
+<tr class="even">
+<td align="left">17-20</td>
+<td align="left">JPOP80SS</td>
+<td align="right">30</td>
+<td align="left">40.5%</td>
+</tr>
+<tr class="odd">
+<td align="left">17-20</td>
+<td align="left">Soulseek</td>
+<td align="right">17</td>
+<td align="left">23%</td>
+</tr>
+<tr class="even">
+<td align="left">17-20</td>
+<td align="left">Torr- [redacted]</td>
+<td align="right">12</td>
+<td align="left">16.2%</td>
+</tr>
+<tr class="odd">
+<td align="left">17-20</td>
+<td align="left">Mix/Web radio</td>
+<td align="right">9</td>
+<td align="left">12.2%</td>
+</tr>
+<tr class="even">
+<td align="left">17-20</td>
+<td align="left">Purchased digital files</td>
+<td align="right">5</td>
+<td align="left">6.8%</td>
+</tr>
+<tr class="odd">
+<td align="left">21-24</td>
+<td align="left">Streaming services</td>
+<td align="right">30</td>
+<td align="left">55.6%</td>
+</tr>
+<tr class="even">
+<td align="left">21-24</td>
+<td align="left">Video sites</td>
+<td align="right">48</td>
+<td align="left">88.9%</td>
+</tr>
+<tr class="odd">
+<td align="left">21-24</td>
+<td align="left">Physical media</td>
+<td align="right">26</td>
+<td align="left">48.1%</td>
+</tr>
+<tr class="even">
+<td align="left">21-24</td>
+<td align="left">JPOP80SS</td>
+<td align="right">25</td>
+<td align="left">46.3%</td>
+</tr>
+<tr class="odd">
+<td align="left">21-24</td>
+<td align="left">Soulseek</td>
+<td align="right">13</td>
+<td align="left">24.1%</td>
+</tr>
+<tr class="even">
+<td align="left">21-24</td>
+<td align="left">Torr- [redacted]</td>
+<td align="right">18</td>
+<td align="left">33.3%</td>
+</tr>
+<tr class="odd">
+<td align="left">21-24</td>
+<td align="left">Mix/Web radio</td>
+<td align="right">7</td>
+<td align="left">13%</td>
+</tr>
+<tr class="even">
+<td align="left">21-24</td>
+<td align="left">Purchased digital files</td>
+<td align="right">2</td>
+<td align="left">3.7%</td>
+</tr>
+<tr class="odd">
+<td align="left">25-29</td>
+<td align="left">Streaming services</td>
+<td align="right">22</td>
+<td align="left">75.9%</td>
+</tr>
+<tr class="even">
+<td align="left">25-29</td>
+<td align="left">Video sites</td>
+<td align="right">20</td>
+<td align="left">69%</td>
+</tr>
+<tr class="odd">
+<td align="left">25-29</td>
+<td align="left">Physical media</td>
+<td align="right">16</td>
+<td align="left">55.2%</td>
+</tr>
+<tr class="even">
+<td align="left">25-29</td>
+<td align="left">JPOP80SS</td>
+<td align="right">11</td>
+<td align="left">37.9%</td>
+</tr>
+<tr class="odd">
+<td align="left">25-29</td>
+<td align="left">Soulseek</td>
+<td align="right">11</td>
+<td align="left">37.9%</td>
+</tr>
+<tr class="even">
+<td align="left">25-29</td>
+<td align="left">Torr- [redacted]</td>
+<td align="right">12</td>
+<td align="left">41.4%</td>
+</tr>
+<tr class="odd">
+<td align="left">25-29</td>
+<td align="left">Mix/Web radio</td>
+<td align="right">4</td>
+<td align="left">13.8%</td>
+</tr>
+<tr class="even">
+<td align="left">25-29</td>
+<td align="left">Purchased digital files</td>
+<td align="right">4</td>
+<td align="left">13.8%</td>
+</tr>
+<tr class="odd">
+<td align="left">30-33</td>
+<td align="left">Streaming services</td>
+<td align="right">6</td>
+<td align="left">46.2%</td>
+</tr>
+<tr class="even">
+<td align="left">30-33</td>
+<td align="left">Video sites</td>
+<td align="right">9</td>
+<td align="left">69.2%</td>
+</tr>
+<tr class="odd">
+<td align="left">30-33</td>
+<td align="left">Physical media</td>
+<td align="right">7</td>
+<td align="left">53.8%</td>
+</tr>
+<tr class="even">
+<td align="left">30-33</td>
+<td align="left">JPOP80SS</td>
+<td align="right">6</td>
+<td align="left">46.2%</td>
+</tr>
+<tr class="odd">
+<td align="left">30-33</td>
+<td align="left">Soulseek</td>
+<td align="right">7</td>
+<td align="left">53.8%</td>
+</tr>
+<tr class="even">
+<td align="left">30-33</td>
+<td align="left">Torr- [redacted]</td>
+<td align="right">6</td>
+<td align="left">46.2%</td>
+</tr>
+<tr class="odd">
+<td align="left">30-33</td>
+<td align="left">Mix/Web radio</td>
+<td align="right">2</td>
+<td align="left">15.4%</td>
+</tr>
+<tr class="even">
+<td align="left">30-33</td>
+<td align="left">Purchased digital files</td>
+<td align="right">2</td>
+<td align="left">15.4%</td>
+</tr>
+<tr class="odd">
+<td align="left">&gt;33</td>
+<td align="left">Streaming services</td>
+<td align="right">12</td>
+<td align="left">63.2%</td>
+</tr>
+<tr class="even">
+<td align="left">&gt;33</td>
+<td align="left">Video sites</td>
+<td align="right">13</td>
+<td align="left">68.4%</td>
+</tr>
+<tr class="odd">
+<td align="left">&gt;33</td>
+<td align="left">Physical media</td>
+<td align="right">13</td>
+<td align="left">68.4%</td>
+</tr>
+<tr class="even">
+<td align="left">&gt;33</td>
+<td align="left">JPOP80SS</td>
+<td align="right">6</td>
+<td align="left">31.6%</td>
+</tr>
+<tr class="odd">
+<td align="left">&gt;33</td>
+<td align="left">Soulseek</td>
+<td align="right">3</td>
+<td align="left">15.8%</td>
+</tr>
+<tr class="even">
+<td align="left">&gt;33</td>
+<td align="left">Torr- [redacted]</td>
+<td align="right">6</td>
+<td align="left">31.6%</td>
+</tr>
+<tr class="odd">
+<td align="left">&gt;33</td>
+<td align="left">Mix/Web radio</td>
+<td align="right">2</td>
+<td align="left">10.5%</td>
+</tr>
+<tr class="even">
+<td align="left">&gt;33</td>
+<td align="left">Purchased digital files</td>
+<td align="right">6</td>
+<td align="left">31.6%</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="preferred-format-for-listening" class="section level3 tabset">
+<h3>Preferred format for listening</h3>
+<div id="graph-2" class="section level4">
+<h4>Graph</h4>
+<p><img src="bivariates_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+</div>
+<div id="table-2" class="section level4">
+<h4>Table</h4>
+<table>
+<thead>
+<tr class="header">
+<th align="left">age</th>
+<th align="left">listen_format</th>
+<th align="right">n</th>
+<th align="left">percent</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">13-16</td>
+<td align="left">Full albums</td>
+<td align="right">23</td>
+<td align="left">88.5%</td>
+</tr>
+<tr class="even">
+<td align="left">13-16</td>
+<td align="left">Single songs</td>
+<td align="right">11</td>
+<td align="left">42.3%</td>
+</tr>
+<tr class="odd">
+<td align="left">13-16</td>
+<td align="left">Playlists</td>
+<td align="right">14</td>
+<td align="left">53.8%</td>
+</tr>
+<tr class="even">
+<td align="left">13-16</td>
+<td align="left">Mixes</td>
+<td align="right">7</td>
+<td align="left">26.9%</td>
+</tr>
+<tr class="odd">
+<td align="left">13-16</td>
+<td align="left">Random shuffle</td>
+<td align="right">12</td>
+<td align="left">46.2%</td>
+</tr>
+<tr class="even">
+<td align="left">17-20</td>
+<td align="left">Full albums</td>
+<td align="right">58</td>
+<td align="left">77.3%</td>
+</tr>
+<tr class="odd">
+<td align="left">17-20</td>
+<td align="left">Single songs</td>
+<td align="right">46</td>
+<td align="left">61.3%</td>
+</tr>
+<tr class="even">
+<td align="left">17-20</td>
+<td align="left">Playlists</td>
+<td align="right">39</td>
+<td align="left">52%</td>
+</tr>
+<tr class="odd">
+<td align="left">17-20</td>
+<td align="left">Mixes</td>
+<td align="right">16</td>
+<td align="left">21.3%</td>
+</tr>
+<tr class="even">
+<td align="left">17-20</td>
+<td align="left">Random shuffle</td>
+<td align="right">27</td>
+<td align="left">36%</td>
+</tr>
+<tr class="odd">
+<td align="left">21-24</td>
+<td align="left">Full albums</td>
+<td align="right">43</td>
+<td align="left">79.6%</td>
+</tr>
+<tr class="even">
+<td align="left">21-24</td>
+<td align="left">Single songs</td>
+<td align="right">39</td>
+<td align="left">72.2%</td>
+</tr>
+<tr class="odd">
+<td align="left">21-24</td>
+<td align="left">Playlists</td>
+<td align="right">28</td>
+<td align="left">51.9%</td>
+</tr>
+<tr class="even">
+<td align="left">21-24</td>
+<td align="left">Mixes</td>
+<td align="right">18</td>
+<td align="left">33.3%</td>
+</tr>
+<tr class="odd">
+<td align="left">21-24</td>
+<td align="left">Random shuffle</td>
+<td align="right">21</td>
+<td align="left">38.9%</td>
+</tr>
+<tr class="even">
+<td align="left">25-29</td>
+<td align="left">Full albums</td>
+<td align="right">26</td>
+<td align="left">89.7%</td>
+</tr>
+<tr class="odd">
+<td align="left">25-29</td>
+<td align="left">Single songs</td>
+<td align="right">10</td>
+<td align="left">34.5%</td>
+</tr>
+<tr class="even">
+<td align="left">25-29</td>
+<td align="left">Playlists</td>
+<td align="right">10</td>
+<td align="left">34.5%</td>
+</tr>
+<tr class="odd">
+<td align="left">25-29</td>
+<td align="left">Mixes</td>
+<td align="right">8</td>
+<td align="left">27.6%</td>
+</tr>
+<tr class="even">
+<td align="left">25-29</td>
+<td align="left">Random shuffle</td>
+<td align="right">8</td>
+<td align="left">27.6%</td>
+</tr>
+<tr class="odd">
+<td align="left">30-33</td>
+<td align="left">Full albums</td>
+<td align="right">12</td>
+<td align="left">92.3%</td>
+</tr>
+<tr class="even">
+<td align="left">30-33</td>
+<td align="left">Single songs</td>
+<td align="right">5</td>
+<td align="left">38.5%</td>
+</tr>
+<tr class="odd">
+<td align="left">30-33</td>
+<td align="left">Playlists</td>
+<td align="right">5</td>
+<td align="left">38.5%</td>
+</tr>
+<tr class="even">
+<td align="left">30-33</td>
+<td align="left">Mixes</td>
+<td align="right">1</td>
+<td align="left">7.7%</td>
+</tr>
+<tr class="odd">
+<td align="left">30-33</td>
+<td align="left">Random shuffle</td>
+<td align="right">2</td>
+<td align="left">15.4%</td>
+</tr>
+<tr class="even">
+<td align="left">&gt;33</td>
+<td align="left">Full albums</td>
+<td align="right">15</td>
+<td align="left">78.9%</td>
+</tr>
+<tr class="odd">
+<td align="left">&gt;33</td>
+<td align="left">Single songs</td>
+<td align="right">12</td>
+<td align="left">63.2%</td>
+</tr>
+<tr class="even">
+<td align="left">&gt;33</td>
+<td align="left">Playlists</td>
+<td align="right">12</td>
+<td align="left">63.2%</td>
+</tr>
+<tr class="odd">
+<td align="left">&gt;33</td>
+<td align="left">Mixes</td>
+<td align="right">3</td>
+<td align="left">15.8%</td>
+</tr>
+<tr class="even">
+<td align="left">&gt;33</td>
+<td align="left">Random shuffle</td>
+<td align="right">7</td>
+<td align="left">36.8%</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="physical-media-ownership" class="section level3 tabset">
+<h3>Physical media ownership</h3>
+<div id="graph-3" class="section level4">
+<h4>Graph</h4>
+<p><img src="bivariates_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+</div>
+<div id="table-3" class="section level4">
+<h4>Table</h4>
+<table style="width:100%;">
+<colgroup>
+<col width="5%" />
+<col width="16%" />
+<col width="24%" />
+<col width="17%" />
+<col width="20%" />
+<col width="16%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="left">No, but I want to</th>
+<th align="left">No, I prefer digital media</th>
+<th align="left">Yes, a couple (&lt;10)</th>
+<th align="left">Yes, quite a bit (&gt;10)</th>
+<th align="left">Yes, a lot (&gt;100)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">13-16</td>
+<td align="left">46.2%</td>
+<td align="left">7.7%</td>
+<td align="left">34.6%</td>
+<td align="left">11.5%</td>
+<td align="left">0.0%</td>
+</tr>
+<tr class="even">
+<td align="left">17-20</td>
+<td align="left">38.7%</td>
+<td align="left">6.7%</td>
+<td align="left">37.3%</td>
+<td align="left">16.0%</td>
+<td align="left">1.3%</td>
+</tr>
+<tr class="odd">
+<td align="left">21-24</td>
+<td align="left">38.9%</td>
+<td align="left">7.4%</td>
+<td align="left">25.9%</td>
+<td align="left">20.4%</td>
+<td align="left">7.4%</td>
+</tr>
+<tr class="even">
+<td align="left">25-29</td>
+<td align="left">20.7%</td>
+<td align="left">13.8%</td>
+<td align="left">31.0%</td>
+<td align="left">20.7%</td>
+<td align="left">13.8%</td>
+</tr>
+<tr class="odd">
+<td align="left">30-33</td>
+<td align="left">30.8%</td>
+<td align="left">7.7%</td>
+<td align="left">23.1%</td>
+<td align="left">38.5%</td>
+<td align="left">0.0%</td>
+</tr>
+<tr class="even">
+<td align="left">&gt;33</td>
+<td align="left">21.1%</td>
+<td align="left">10.5%</td>
+<td align="left">15.8%</td>
+<td align="left">26.3%</td>
+<td align="left">26.3%</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="welcome-chart" class="section level2">
+<h2>Welcome chart</h2>
+<div id="essentials" class="section level3 tabset">
+<h3>Essentials</h3>
+<div id="graph-4" class="section level4">
+<h4>Graph</h4>
+<p><img src="bivariates_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+</div>
+<div id="table-4" class="section level4">
+<h4>Table</h4>
+<table>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="left">Anri</th>
+<th align="left">Taeko Onuki</th>
+<th align="left">Takako Mamiya</th>
+<th align="left">Tatsuro Yamashita</th>
+<th align="left">Toshiki Kadomatsu</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">13-16</td>
+<td align="left">24.0%</td>
+<td align="left">8.0%</td>
+<td align="left">4.0%</td>
+<td align="left">56.0%</td>
+<td align="left">8.0%</td>
+</tr>
+<tr class="even">
+<td align="left">17-20</td>
+<td align="left">30.1%</td>
+<td align="left">9.6%</td>
+<td align="left">9.6%</td>
+<td align="left">31.5%</td>
+<td align="left">19.2%</td>
+</tr>
+<tr class="odd">
+<td align="left">21-24</td>
+<td align="left">11.1%</td>
+<td align="left">16.7%</td>
+<td align="left">7.4%</td>
+<td align="left">50.0%</td>
+<td align="left">14.8%</td>
+</tr>
+<tr class="even">
+<td align="left">25-29</td>
+<td align="left">20.7%</td>
+<td align="left">31.0%</td>
+<td align="left">3.4%</td>
+<td align="left">24.1%</td>
+<td align="left">20.7%</td>
+</tr>
+<tr class="odd">
+<td align="left">30-33</td>
+<td align="left">0.0%</td>
+<td align="left">33.3%</td>
+<td align="left">16.7%</td>
+<td align="left">41.7%</td>
+<td align="left">8.3%</td>
+</tr>
+<tr class="even">
+<td align="left">&gt;33</td>
+<td align="left">21.1%</td>
+<td align="left">10.5%</td>
+<td align="left">0.0%</td>
+<td align="left">36.8%</td>
+<td align="left">31.6%</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="shenanigans-and-tomfoolery" class="section level2">
+<h2>Shenanigans and tomfoolery</h2>
+<div id="ymo" class="section level3 tabset">
+<h3>YMO</h3>
+<div id="graph-5" class="section level4">
+<h4>Graph</h4>
+<p><img src="bivariates_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+</div>
+<div id="table-5" class="section level4">
+<h4>Table</h4>
+<table>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="left">Haruomi Hosono</th>
+<th align="left">Ryuichi Sakamoto</th>
+<th align="left">Yukihiro Takahashi</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">13-16</td>
+<td align="left">28.6%</td>
+<td align="left">33.3%</td>
+<td align="left">38.1%</td>
+</tr>
+<tr class="even">
+<td align="left">17-20</td>
+<td align="left">34.6%</td>
+<td align="left">34.6%</td>
+<td align="left">30.8%</td>
+</tr>
+<tr class="odd">
+<td align="left">21-24</td>
+<td align="left">34.8%</td>
+<td align="left">45.7%</td>
+<td align="left">19.6%</td>
+</tr>
+<tr class="even">
+<td align="left">25-29</td>
+<td align="left">40.0%</td>
+<td align="left">52.0%</td>
+<td align="left">8.0%</td>
+</tr>
+<tr class="odd">
+<td align="left">30-33</td>
+<td align="left">50.0%</td>
+<td align="left">40.0%</td>
+<td align="left">10.0%</td>
+</tr>
+<tr class="even">
+<td align="left">&gt;33</td>
+<td align="left">31.2%</td>
+<td align="left">37.5%</td>
+<td align="left">31.2%</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="relationship-status" class="section level3 tabset">
+<h3>Relationship status</h3>
+<div id="graph-6" class="section level4">
+<h4>Graph</h4>
+<p><img src="bivariates_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+</div>
+<div id="table-6" class="section level4">
+<h4>Table</h4>
+<table>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="left">Single</th>
+<th align="left">In a relationship</th>
+<th align="left">Civil union</th>
+<th align="left">Married</th>
+<th align="left">Divorced/separated</th>
+<th align="left">Widowed</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">13-16</td>
+<td align="left">0.0%</td>
+<td align="left">4.3%</td>
+<td align="left">13.0%</td>
+<td align="left">69.6%</td>
+<td align="left">4.3%</td>
+<td align="left">8.7%</td>
+</tr>
+<tr class="even">
+<td align="left">17-20</td>
+<td align="left">3.1%</td>
+<td align="left">3.1%</td>
+<td align="left">10.9%</td>
+<td align="left">70.3%</td>
+<td align="left">6.2%</td>
+<td align="left">6.2%</td>
+</tr>
+<tr class="odd">
+<td align="left">21-24</td>
+<td align="left">2.1%</td>
+<td align="left">2.1%</td>
+<td align="left">4.3%</td>
+<td align="left">85.1%</td>
+<td align="left">2.1%</td>
+<td align="left">4.3%</td>
+</tr>
+<tr class="even">
+<td align="left">25-29</td>
+<td align="left">3.6%</td>
+<td align="left">0.0%</td>
+<td align="left">10.7%</td>
+<td align="left">60.7%</td>
+<td align="left">14.3%</td>
+<td align="left">10.7%</td>
+</tr>
+<tr class="odd">
+<td align="left">30-33</td>
+<td align="left">9.1%</td>
+<td align="left">0.0%</td>
+<td align="left">0.0%</td>
+<td align="left">63.6%</td>
+<td align="left">18.2%</td>
+<td align="left">9.1%</td>
+</tr>
+<tr class="even">
+<td align="left">&gt;33</td>
+<td align="left">13.3%</td>
+<td align="left">0.0%</td>
+<td align="left">13.3%</td>
+<td align="left">66.7%</td>
+<td align="left">0.0%</td>
+<td align="left">6.7%</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="obi" class="section level3 tabset">
+<h3>Obi</h3>
+<div id="graph-7" class="section level4">
+<h4>Graph</h4>
+<p><img src="bivariates_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+</div>
+<div id="table-7" class="section level4">
+<h4>Table</h4>
+<table>
+<colgroup>
+<col width="6%" />
+<col width="12%" />
+<col width="12%" />
+<col width="24%" />
+<col width="44%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="left">I love them</th>
+<th align="left">I hate them</th>
+<th align="left">I’m indifferent to them</th>
+<th align="left">Whoever asked this question gets nOBItches</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">13-16</td>
+<td align="left">27.3%</td>
+<td align="left">0.0%</td>
+<td align="left">22.7%</td>
+<td align="left">50.0%</td>
+</tr>
+<tr class="even">
+<td align="left">17-20</td>
+<td align="left">33.3%</td>
+<td align="left">3.3%</td>
+<td align="left">26.7%</td>
+<td align="left">36.7%</td>
+</tr>
+<tr class="odd">
+<td align="left">21-24</td>
+<td align="left">23.4%</td>
+<td align="left">0.0%</td>
+<td align="left">40.4%</td>
+<td align="left">36.2%</td>
+</tr>
+<tr class="even">
+<td align="left">25-29</td>
+<td align="left">33.3%</td>
+<td align="left">7.4%</td>
+<td align="left">22.2%</td>
+<td align="left">37.0%</td>
+</tr>
+<tr class="odd">
+<td align="left">30-33</td>
+<td align="left">36.4%</td>
+<td align="left">0.0%</td>
+<td align="left">54.5%</td>
+<td align="left">9.1%</td>
+</tr>
+<tr class="even">
+<td align="left">&gt;33</td>
+<td align="left">23.5%</td>
+<td align="left">11.8%</td>
+<td align="left">47.1%</td>
+<td align="left">17.6%</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="casiopea" class="section level3 tabset">
+<h3>Casiopea</h3>
+<div id="graph-8" class="section level4">
+<h4>Graph</h4>
+<p><img src="bivariates_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+</div>
+<div id="table-8" class="section level4">
+<h4>Table</h4>
+<table>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="left">Mint Jams</th>
+<th align="left">Mint James</th>
+<th align="left">Mid Jams</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">13-16</td>
+<td align="left">62.5%</td>
+<td align="left">16.7%</td>
+<td align="left">20.8%</td>
+</tr>
+<tr class="even">
+<td align="left">17-20</td>
+<td align="left">75.0%</td>
+<td align="left">18.1%</td>
+<td align="left">6.9%</td>
+</tr>
+<tr class="odd">
+<td align="left">21-24</td>
+<td align="left">78.4%</td>
+<td align="left">9.8%</td>
+<td align="left">11.8%</td>
+</tr>
+<tr class="even">
+<td align="left">25-29</td>
+<td align="left">72.4%</td>
+<td align="left">3.4%</td>
+<td align="left">24.1%</td>
+</tr>
+<tr class="odd">
+<td align="left">30-33</td>
+<td align="left">83.3%</td>
+<td align="left">8.3%</td>
+<td align="left">8.3%</td>
+</tr>
+<tr class="even">
+<td align="left">&gt;33</td>
+<td align="left">88.9%</td>
+<td align="left">5.6%</td>
+<td align="left">5.6%</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="blud" class="section level3 tabset">
+<h3>Blud</h3>
+<div id="graph-9" class="section level4">
+<h4>Graph</h4>
+<p><img src="bivariates_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+</div>
+<div id="table-9" class="section level4">
+<h4>Table</h4>
+<table>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="left">Yukihiro Takahashi</th>
+<th align="left">Blud</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">13-16</td>
+<td align="left">50.0%</td>
+<td align="left">50.0%</td>
+</tr>
+<tr class="even">
+<td align="left">17-20</td>
+<td align="left">40.3%</td>
+<td align="left">59.7%</td>
+</tr>
+<tr class="odd">
+<td align="left">21-24</td>
+<td align="left">47.8%</td>
+<td align="left">52.2%</td>
+</tr>
+<tr class="even">
+<td align="left">25-29</td>
+<td align="left">60.0%</td>
+<td align="left">40.0%</td>
+</tr>
+<tr class="odd">
+<td align="left">30-33</td>
+<td align="left">60.0%</td>
+<td align="left">40.0%</td>
+</tr>
+<tr class="even">
+<td align="left">&gt;33</td>
+<td align="left">81.2%</td>
+<td align="left">18.8%</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div id="number-of-years-known-city-pop" class="section level1">
+<h1>Number of years known city pop</h1>
+<div id="interaction-with-city-pop-1" class="section level2">
+<h2>Interaction with city pop</h2>
+<div id="where-discovered-city-pop-1" class="section level3 tabset">
+<h3>Where discovered city pop</h3>
+<div id="graph-10" class="section level4">
+<h4>Graph</h4>
+<p><img src="bivariates_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+</div>
+<div id="table-10" class="section level4">
+<h4>Table</h4>
+<table>
+<thead>
+<tr class="header">
+<th align="left">know_years</th>
+<th align="left">know_first</th>
+<th align="right">n</th>
+<th align="left">percent</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Less than a year</td>
+<td align="left">YouTube recommendations</td>
+<td align="right">1</td>
+<td align="left">33.3%</td>
+</tr>
+<tr class="even">
+<td align="left">Less than a year</td>
+<td align="left">Heard it in a meme/referenced in a meme</td>
+<td align="right">1</td>
+<td align="left">33.3%</td>
+</tr>
+<tr class="odd">
+<td align="left">Less than a year</td>
+<td align="left">Other</td>
+<td align="right">1</td>
+<td align="left">33.3%</td>
+</tr>
+<tr class="even">
+<td align="left">1-2</td>
+<td align="left">YouTube recommendations</td>
+<td align="right">37</td>
+<td align="left">74%</td>
+</tr>
+<tr class="odd">
+<td align="left">1-2</td>
+<td align="left">TikTok</td>
+<td align="right">10</td>
+<td align="left">20%</td>
+</tr>
+<tr class="even">
+<td align="left">1-2</td>
+<td align="left">Heard it in a TV show/anime/movie</td>
+<td align="right">4</td>
+<td align="left">8%</td>
+</tr>
+<tr class="odd">
+<td align="left">1-2</td>
+<td align="left">Heard it in a mix</td>
+<td align="right">6</td>
+<td align="left">12%</td>
+</tr>
+<tr class="even">
+<td align="left">1-2</td>
+<td align="left">Heard it in a meme/referenced in a meme</td>
+<td align="right">6</td>
+<td align="left">12%</td>
+</tr>
+<tr class="odd">
+<td align="left">1-2</td>
+<td align="left">Through samples in mainstream music</td>
+<td align="right">2</td>
+<td align="left">4%</td>
+</tr>
+<tr class="even">
+<td align="left">1-2</td>
+<td align="left">Through vaporwave/future funk</td>
+<td align="right">7</td>
+<td align="left">14%</td>
+</tr>
+<tr class="odd">
+<td align="left">1-2</td>
+<td align="left">Discogs/RYM/other digging sites</td>
+<td align="right">4</td>
+<td align="left">8%</td>
+</tr>
+<tr class="even">
+<td align="left">1-2</td>
+<td align="left">Recommended by a friend/someone else</td>
+<td align="right">12</td>
+<td align="left">24%</td>
+</tr>
+<tr class="odd">
+<td align="left">1-2</td>
+<td align="left">Other</td>
+<td align="right">1</td>
+<td align="left">2%</td>
+</tr>
+<tr class="even">
+<td align="left">1-2</td>
+<td align="left">Other</td>
+<td align="right">1</td>
+<td align="left">2%</td>
+</tr>
+<tr class="odd">
+<td align="left">1-2</td>
+<td align="left">Other</td>
+<td align="right">1</td>
+<td align="left">2%</td>
+</tr>
+<tr class="even">
+<td align="left">1-2</td>
+<td align="left">Other</td>
+<td align="right">1</td>
+<td align="left">2%</td>
+</tr>
+<tr class="odd">
+<td align="left">1-2</td>
+<td align="left">Other</td>
+<td align="right">1</td>
+<td align="left">2%</td>
+</tr>
+<tr class="even">
+<td align="left">1-2</td>
+<td align="left">Other</td>
+<td align="right">1</td>
+<td align="left">2%</td>
+</tr>
+<tr class="odd">
+<td align="left">1-2</td>
+<td align="left">Other</td>
+<td align="right">1</td>
+<td align="left">2%</td>
+</tr>
+<tr class="even">
+<td align="left">1-2</td>
+<td align="left">Other</td>
+<td align="right">1</td>
+<td align="left">2%</td>
+</tr>
+<tr class="odd">
+<td align="left">3-4</td>
+<td align="left">YouTube recommendations</td>
+<td align="right">65</td>
+<td align="left">75.6%</td>
+</tr>
+<tr class="even">
+<td align="left">3-4</td>
+<td align="left">TikTok</td>
+<td align="right">3</td>
+<td align="left">3.5%</td>
+</tr>
+<tr class="odd">
+<td align="left">3-4</td>
+<td align="left">Heard it in a TV show/anime/movie</td>
+<td align="right">14</td>
+<td align="left">16.3%</td>
+</tr>
+<tr class="even">
+<td align="left">3-4</td>
+<td align="left">Heard it in a mix</td>
+<td align="right">18</td>
+<td align="left">20.9%</td>
+</tr>
+<tr class="odd">
+<td align="left">3-4</td>
+<td align="left">Heard it in a meme/referenced in a meme</td>
+<td align="right">11</td>
+<td align="left">12.8%</td>
+</tr>
+<tr class="even">
+<td align="left">3-4</td>
+<td align="left">Through samples in mainstream music</td>
+<td align="right">4</td>
+<td align="left">4.7%</td>
+</tr>
+<tr class="odd">
+<td align="left">3-4</td>
+<td align="left">Through vaporwave/future funk</td>
+<td align="right">32</td>
+<td align="left">37.2%</td>
+</tr>
+<tr class="even">
+<td align="left">3-4</td>
+<td align="left">Discogs/RYM/other digging sites</td>
+<td align="right">10</td>
+<td align="left">11.6%</td>
+</tr>
+<tr class="odd">
+<td align="left">3-4</td>
+<td align="left">Digging in a record store</td>
+<td align="right">1</td>
+<td align="left">1.2%</td>
+</tr>
+<tr class="even">
+<td align="left">3-4</td>
+<td align="left">Recommended by a friend/someone else</td>
+<td align="right">13</td>
+<td align="left">15.1%</td>
+</tr>
+<tr class="odd">
+<td align="left">3-4</td>
+<td align="left">Grew up listening to it</td>
+<td align="right">2</td>
+<td align="left">2.3%</td>
+</tr>
+<tr class="even">
+<td align="left">3-4</td>
+<td align="left">Other</td>
+<td align="right">1</td>
+<td align="left">1.2%</td>
+</tr>
+<tr class="odd">
+<td align="left">3-4</td>
+<td align="left">Other</td>
+<td align="right">1</td>
+<td align="left">1.2%</td>
+</tr>
+<tr class="even">
+<td align="left">3-4</td>
+<td align="left">Other</td>
+<td align="right">1</td>
+<td align="left">1.2%</td>
+</tr>
+<tr class="odd">
+<td align="left">5-6</td>
+<td align="left">YouTube recommendations</td>
+<td align="right">33</td>
+<td align="left">70.2%</td>
+</tr>
+<tr class="even">
+<td align="left">5-6</td>
+<td align="left">Heard it in a TV show/anime/movie</td>
+<td align="right">6</td>
+<td align="left">12.8%</td>
+</tr>
+<tr class="odd">
+<td align="left">5-6</td>
+<td align="left">Heard it in a mix</td>
+<td align="right">10</td>
+<td align="left">21.3%</td>
+</tr>
+<tr class="even">
+<td align="left">5-6</td>
+<td align="left">Heard it in a meme/referenced in a meme</td>
+<td align="right">7</td>
+<td align="left">14.9%</td>
+</tr>
+<tr class="odd">
+<td align="left">5-6</td>
+<td align="left">Through samples in mainstream music</td>
+<td align="right">2</td>
+<td align="left">4.3%</td>
+</tr>
+<tr class="even">
+<td align="left">5-6</td>
+<td align="left">Through vaporwave/future funk</td>
+<td align="right">22</td>
+<td align="left">46.8%</td>
+</tr>
+<tr class="odd">
+<td align="left">5-6</td>
+<td align="left">Discogs/RYM/other digging sites</td>
+<td align="right">4</td>
+<td align="left">8.5%</td>
+</tr>
+<tr class="even">
+<td align="left">5-6</td>
+<td align="left">Digging in a record store</td>
+<td align="right">2</td>
+<td align="left">4.3%</td>
+</tr>
+<tr class="odd">
+<td align="left">5-6</td>
+<td align="left">Recommended by a friend/someone else</td>
+<td align="right">9</td>
+<td align="left">19.1%</td>
+</tr>
+<tr class="even">
+<td align="left">5-6</td>
+<td align="left">Grew up listening to it</td>
+<td align="right">1</td>
+<td align="left">2.1%</td>
+</tr>
+<tr class="odd">
+<td align="left">5-6</td>
+<td align="left">Other</td>
+<td align="right">1</td>
+<td align="left">2.1%</td>
+</tr>
+<tr class="even">
+<td align="left">5-6</td>
+<td align="left">Other</td>
+<td align="right">1</td>
+<td align="left">2.1%</td>
+</tr>
+<tr class="odd">
+<td align="left">5-6</td>
+<td align="left">Other</td>
+<td align="right">1</td>
+<td align="left">2.1%</td>
+</tr>
+<tr class="even">
+<td align="left">5-6</td>
+<td align="left">Other</td>
+<td align="right">1</td>
+<td align="left">2.1%</td>
+</tr>
+<tr class="odd">
+<td align="left">7-9</td>
+<td align="left">YouTube recommendations</td>
+<td align="right">9</td>
+<td align="left">52.9%</td>
+</tr>
+<tr class="even">
+<td align="left">7-9</td>
+<td align="left">Heard it in a TV show/anime/movie</td>
+<td align="right">3</td>
+<td align="left">17.6%</td>
+</tr>
+<tr class="odd">
+<td align="left">7-9</td>
+<td align="left">Heard it in a mix</td>
+<td align="right">1</td>
+<td align="left">5.9%</td>
+</tr>
+<tr class="even">
+<td align="left">7-9</td>
+<td align="left">Heard it in a meme/referenced in a meme</td>
+<td align="right">1</td>
+<td align="left">5.9%</td>
+</tr>
+<tr class="odd">
+<td align="left">7-9</td>
+<td align="left">Through samples in mainstream music</td>
+<td align="right">1</td>
+<td align="left">5.9%</td>
+</tr>
+<tr class="even">
+<td align="left">7-9</td>
+<td align="left">Through vaporwave/future funk</td>
+<td align="right">6</td>
+<td align="left">35.3%</td>
+</tr>
+<tr class="odd">
+<td align="left">7-9</td>
+<td align="left">Discogs/RYM/other digging sites</td>
+<td align="right">5</td>
+<td align="left">29.4%</td>
+</tr>
+<tr class="even">
+<td align="left">7-9</td>
+<td align="left">Digging in a record store</td>
+<td align="right">1</td>
+<td align="left">5.9%</td>
+</tr>
+<tr class="odd">
+<td align="left">7-9</td>
+<td align="left">Recommended by a friend/someone else</td>
+<td align="right">6</td>
+<td align="left">35.3%</td>
+</tr>
+<tr class="even">
+<td align="left">7-9</td>
+<td align="left">Other</td>
+<td align="right">1</td>
+<td align="left">5.9%</td>
+</tr>
+<tr class="odd">
+<td align="left">10+</td>
+<td align="left">YouTube recommendations</td>
+<td align="right">4</td>
+<td align="left">30.8%</td>
+</tr>
+<tr class="even">
+<td align="left">10+</td>
+<td align="left">Heard it in a TV show/anime/movie</td>
+<td align="right">4</td>
+<td align="left">30.8%</td>
+</tr>
+<tr class="odd">
+<td align="left">10+</td>
+<td align="left">Heard it in a mix</td>
+<td align="right">1</td>
+<td align="left">7.7%</td>
+</tr>
+<tr class="even">
+<td align="left">10+</td>
+<td align="left">Through samples in mainstream music</td>
+<td align="right">1</td>
+<td align="left">7.7%</td>
+</tr>
+<tr class="odd">
+<td align="left">10+</td>
+<td align="left">Through vaporwave/future funk</td>
+<td align="right">2</td>
+<td align="left">15.4%</td>
+</tr>
+<tr class="even">
+<td align="left">10+</td>
+<td align="left">Discogs/RYM/other digging sites</td>
+<td align="right">2</td>
+<td align="left">15.4%</td>
+</tr>
+<tr class="odd">
+<td align="left">10+</td>
+<td align="left">Digging in a record store</td>
+<td align="right">1</td>
+<td align="left">7.7%</td>
+</tr>
+<tr class="even">
+<td align="left">10+</td>
+<td align="left">Grew up listening to it</td>
+<td align="right">5</td>
+<td align="left">38.5%</td>
+</tr>
+<tr class="odd">
+<td align="left">10+</td>
+<td align="left">Other</td>
+<td align="right">1</td>
+<td align="left">7.7%</td>
+</tr>
+<tr class="even">
+<td align="left">10+</td>
+<td align="left">Other</td>
+<td align="right">1</td>
+<td align="left">7.7%</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="where-one-listens-to-city-pop-1" class="section level3 tabset">
+<h3>Where one listens to city pop</h3>
+<div id="graph-11" class="section level4">
+<h4>Graph</h4>
+<p><img src="bivariates_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
+</div>
+<div id="table-11" class="section level4">
+<h4>Table</h4>
+<table>
+<thead>
+<tr class="header">
+<th align="left">know_years</th>
+<th align="left">listen_where</th>
+<th align="right">n</th>
+<th align="left">percent</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Less than a year</td>
+<td align="left">Streaming services</td>
+<td align="right">1</td>
+<td align="left">33.3%</td>
+</tr>
+<tr class="even">
+<td align="left">Less than a year</td>
+<td align="left">Video sites</td>
+<td align="right">1</td>
+<td align="left">33.3%</td>
+</tr>
+<tr class="odd">
+<td align="left">Less than a year</td>
+<td align="left">Soulseek</td>
+<td align="right">1</td>
+<td align="left">33.3%</td>
+</tr>
+<tr class="even">
+<td align="left">Less than a year</td>
+<td align="left">Torr- [redacted]</td>
+<td align="right">2</td>
+<td align="left">66.7%</td>
+</tr>
+<tr class="odd">
+<td align="left">1-2</td>
+<td align="left">Streaming services</td>
+<td align="right">39</td>
+<td align="left">79.6%</td>
+</tr>
+<tr class="even">
+<td align="left">1-2</td>
+<td align="left">Video sites</td>
+<td align="right">40</td>
+<td align="left">81.6%</td>
+</tr>
+<tr class="odd">
+<td align="left">1-2</td>
+<td align="left">Physical media</td>
+<td align="right">15</td>
+<td align="left">30.6%</td>
+</tr>
+<tr class="even">
+<td align="left">1-2</td>
+<td align="left">JPOP80SS</td>
+<td align="right">10</td>
+<td align="left">20.4%</td>
+</tr>
+<tr class="odd">
+<td align="left">1-2</td>
+<td align="left">Soulseek</td>
+<td align="right">6</td>
+<td align="left">12.2%</td>
+</tr>
+<tr class="even">
+<td align="left">1-2</td>
+<td align="left">Torr- [redacted]</td>
+<td align="right">6</td>
+<td align="left">12.2%</td>
+</tr>
+<tr class="odd">
+<td align="left">1-2</td>
+<td align="left">Mix/Web radio</td>
+<td align="right">3</td>
+<td align="left">6.1%</td>
+</tr>
+<tr class="even">
+<td align="left">1-2</td>
+<td align="left">Purchased digital files</td>
+<td align="right">1</td>
+<td align="left">2%</td>
+</tr>
+<tr class="odd">
+<td align="left">3-4</td>
+<td align="left">Streaming services</td>
+<td align="right">61</td>
+<td align="left">70.1%</td>
+</tr>
+<tr class="even">
+<td align="left">3-4</td>
+<td align="left">Video sites</td>
+<td align="right">71</td>
+<td align="left">81.6%</td>
+</tr>
+<tr class="odd">
+<td align="left">3-4</td>
+<td align="left">Physical media</td>
+<td align="right">42</td>
+<td align="left">48.3%</td>
+</tr>
+<tr class="even">
+<td align="left">3-4</td>
+<td align="left">JPOP80SS</td>
+<td align="right">45</td>
+<td align="left">51.7%</td>
+</tr>
+<tr class="odd">
+<td align="left">3-4</td>
+<td align="left">Soulseek</td>
+<td align="right">23</td>
+<td align="left">26.4%</td>
+</tr>
+<tr class="even">
+<td align="left">3-4</td>
+<td align="left">Torr- [redacted]</td>
+<td align="right">23</td>
+<td align="left">26.4%</td>
+</tr>
+<tr class="odd">
+<td align="left">3-4</td>
+<td align="left">Mix/Web radio</td>
+<td align="right">10</td>
+<td align="left">11.5%</td>
+</tr>
+<tr class="even">
+<td align="left">3-4</td>
+<td align="left">Purchased digital files</td>
+<td align="right">8</td>
+<td align="left">9.2%</td>
+</tr>
+<tr class="odd">
+<td align="left">5-6</td>
+<td align="left">Streaming services</td>
+<td align="right">33</td>
+<td align="left">70.2%</td>
+</tr>
+<tr class="even">
+<td align="left">5-6</td>
+<td align="left">Video sites</td>
+<td align="right">38</td>
+<td align="left">80.9%</td>
+</tr>
+<tr class="odd">
+<td align="left">5-6</td>
+<td align="left">Physical media</td>
+<td align="right">22</td>
+<td align="left">46.8%</td>
+</tr>
+<tr class="even">
+<td align="left">5-6</td>
+<td align="left">JPOP80SS</td>
+<td align="right">17</td>
+<td align="left">36.2%</td>
+</tr>
+<tr class="odd">
+<td align="left">5-6</td>
+<td align="left">Soulseek</td>
+<td align="right">17</td>
+<td align="left">36.2%</td>
+</tr>
+<tr class="even">
+<td align="left">5-6</td>
+<td align="left">Torr- [redacted]</td>
+<td align="right">17</td>
+<td align="left">36.2%</td>
+</tr>
+<tr class="odd">
+<td align="left">5-6</td>
+<td align="left">Mix/Web radio</td>
+<td align="right">11</td>
+<td align="left">23.4%</td>
+</tr>
+<tr class="even">
+<td align="left">5-6</td>
+<td align="left">Purchased digital files</td>
+<td align="right">4</td>
+<td align="left">8.5%</td>
+</tr>
+<tr class="odd">
+<td align="left">7-9</td>
+<td align="left">Streaming services</td>
+<td align="right">8</td>
+<td align="left">47.1%</td>
+</tr>
+<tr class="even">
+<td align="left">7-9</td>
+<td align="left">Video sites</td>
+<td align="right">11</td>
+<td align="left">64.7%</td>
+</tr>
+<tr class="odd">
+<td align="left">7-9</td>
+<td align="left">Physical media</td>
+<td align="right">10</td>
+<td align="left">58.8%</td>
+</tr>
+<tr class="even">
+<td align="left">7-9</td>
+<td align="left">JPOP80SS</td>
+<td align="right">8</td>
+<td align="left">47.1%</td>
+</tr>
+<tr class="odd">
+<td align="left">7-9</td>
+<td align="left">Soulseek</td>
+<td align="right">7</td>
+<td align="left">41.2%</td>
+</tr>
+<tr class="even">
+<td align="left">7-9</td>
+<td align="left">Torr- [redacted]</td>
+<td align="right">9</td>
+<td align="left">52.9%</td>
+</tr>
+<tr class="odd">
+<td align="left">7-9</td>
+<td align="left">Mix/Web radio</td>
+<td align="right">2</td>
+<td align="left">11.8%</td>
+</tr>
+<tr class="even">
+<td align="left">7-9</td>
+<td align="left">Purchased digital files</td>
+<td align="right">5</td>
+<td align="left">29.4%</td>
+</tr>
+<tr class="odd">
+<td align="left">10+</td>
+<td align="left">Streaming services</td>
+<td align="right">8</td>
+<td align="left">61.5%</td>
+</tr>
+<tr class="even">
+<td align="left">10+</td>
+<td align="left">Video sites</td>
+<td align="right">8</td>
+<td align="left">61.5%</td>
+</tr>
+<tr class="odd">
+<td align="left">10+</td>
+<td align="left">Physical media</td>
+<td align="right">10</td>
+<td align="left">76.9%</td>
+</tr>
+<tr class="even">
+<td align="left">10+</td>
+<td align="left">JPOP80SS</td>
+<td align="right">8</td>
+<td align="left">61.5%</td>
+</tr>
+<tr class="odd">
+<td align="left">10+</td>
+<td align="left">Soulseek</td>
+<td align="right">4</td>
+<td align="left">30.8%</td>
+</tr>
+<tr class="even">
+<td align="left">10+</td>
+<td align="left">Torr- [redacted]</td>
+<td align="right">4</td>
+<td align="left">30.8%</td>
+</tr>
+<tr class="odd">
+<td align="left">10+</td>
+<td align="left">Mix/Web radio</td>
+<td align="right">1</td>
+<td align="left">7.7%</td>
+</tr>
+<tr class="even">
+<td align="left">10+</td>
+<td align="left">Purchased digital files</td>
+<td align="right">2</td>
+<td align="left">15.4%</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="preferred-format-for-listening-1" class="section level3 tabset">
+<h3>Preferred format for listening</h3>
+<div id="graph-12" class="section level4">
+<h4>Graph</h4>
+<p><img src="bivariates_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
+</div>
+<div id="table-12" class="section level4">
+<h4>Table</h4>
+<table>
+<thead>
+<tr class="header">
+<th align="left">know_years</th>
+<th align="left">listen_format</th>
+<th align="right">n</th>
+<th align="left">percent</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Less than a year</td>
+<td align="left">Full albums</td>
+<td align="right">2</td>
+<td align="left">66.7%</td>
+</tr>
+<tr class="even">
+<td align="left">Less than a year</td>
+<td align="left">Mixes</td>
+<td align="right">1</td>
+<td align="left">33.3%</td>
+</tr>
+<tr class="odd">
+<td align="left">1-2</td>
+<td align="left">Full albums</td>
+<td align="right">39</td>
+<td align="left">78%</td>
+</tr>
+<tr class="even">
+<td align="left">1-2</td>
+<td align="left">Single songs</td>
+<td align="right">28</td>
+<td align="left">56%</td>
+</tr>
+<tr class="odd">
+<td align="left">1-2</td>
+<td align="left">Playlists</td>
+<td align="right">29</td>
+<td align="left">58%</td>
+</tr>
+<tr class="even">
+<td align="left">1-2</td>
+<td align="left">Mixes</td>
+<td align="right">9</td>
+<td align="left">18%</td>
+</tr>
+<tr class="odd">
+<td align="left">1-2</td>
+<td align="left">Random shuffle</td>
+<td align="right">18</td>
+<td align="left">36%</td>
+</tr>
+<tr class="even">
+<td align="left">3-4</td>
+<td align="left">Full albums</td>
+<td align="right">74</td>
+<td align="left">85.1%</td>
+</tr>
+<tr class="odd">
+<td align="left">3-4</td>
+<td align="left">Single songs</td>
+<td align="right">49</td>
+<td align="left">56.3%</td>
+</tr>
+<tr class="even">
+<td align="left">3-4</td>
+<td align="left">Playlists</td>
+<td align="right">42</td>
+<td align="left">48.3%</td>
+</tr>
+<tr class="odd">
+<td align="left">3-4</td>
+<td align="left">Mixes</td>
+<td align="right">20</td>
+<td align="left">23%</td>
+</tr>
+<tr class="even">
+<td align="left">3-4</td>
+<td align="left">Random shuffle</td>
+<td align="right">27</td>
+<td align="left">31%</td>
+</tr>
+<tr class="odd">
+<td align="left">5-6</td>
+<td align="left">Full albums</td>
+<td align="right">37</td>
+<td align="left">78.7%</td>
+</tr>
+<tr class="even">
+<td align="left">5-6</td>
+<td align="left">Single songs</td>
+<td align="right">32</td>
+<td align="left">68.1%</td>
+</tr>
+<tr class="odd">
+<td align="left">5-6</td>
+<td align="left">Playlists</td>
+<td align="right">27</td>
+<td align="left">57.4%</td>
+</tr>
+<tr class="even">
+<td align="left">5-6</td>
+<td align="left">Mixes</td>
+<td align="right">15</td>
+<td align="left">31.9%</td>
+</tr>
+<tr class="odd">
+<td align="left">5-6</td>
+<td align="left">Random shuffle</td>
+<td align="right">21</td>
+<td align="left">44.7%</td>
+</tr>
+<tr class="even">
+<td align="left">7-9</td>
+<td align="left">Full albums</td>
+<td align="right">14</td>
+<td align="left">82.4%</td>
+</tr>
+<tr class="odd">
+<td align="left">7-9</td>
+<td align="left">Single songs</td>
+<td align="right">6</td>
+<td align="left">35.3%</td>
+</tr>
+<tr class="even">
+<td align="left">7-9</td>
+<td align="left">Playlists</td>
+<td align="right">5</td>
+<td align="left">29.4%</td>
+</tr>
+<tr class="odd">
+<td align="left">7-9</td>
+<td align="left">Mixes</td>
+<td align="right">4</td>
+<td align="left">23.5%</td>
+</tr>
+<tr class="even">
+<td align="left">7-9</td>
+<td align="left">Random shuffle</td>
+<td align="right">5</td>
+<td align="left">29.4%</td>
+</tr>
+<tr class="odd">
+<td align="left">10+</td>
+<td align="left">Full albums</td>
+<td align="right">12</td>
+<td align="left">92.3%</td>
+</tr>
+<tr class="even">
+<td align="left">10+</td>
+<td align="left">Single songs</td>
+<td align="right">9</td>
+<td align="left">69.2%</td>
+</tr>
+<tr class="odd">
+<td align="left">10+</td>
+<td align="left">Playlists</td>
+<td align="right">6</td>
+<td align="left">46.2%</td>
+</tr>
+<tr class="even">
+<td align="left">10+</td>
+<td align="left">Mixes</td>
+<td align="right">4</td>
+<td align="left">30.8%</td>
+</tr>
+<tr class="odd">
+<td align="left">10+</td>
+<td align="left">Random shuffle</td>
+<td align="right">6</td>
+<td align="left">46.2%</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="physical-media-ownership-1" class="section level3 tabset">
+<h3>Physical media ownership</h3>
+<div id="graph-13" class="section level4">
+<h4>Graph</h4>
+<p><img src="bivariates_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
+</div>
+<div id="table-13" class="section level4">
+<h4>Table</h4>
+<table>
+<colgroup>
+<col width="3%" />
+<col width="16%" />
+<col width="24%" />
+<col width="18%" />
+<col width="20%" />
+<col width="16%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="left">No, but I want to</th>
+<th align="left">No, I prefer digital media</th>
+<th align="left">Yes, a couple (&lt;10)</th>
+<th align="left">Yes, quite a bit (&gt;10)</th>
+<th align="left">Yes, a lot (&gt;100)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">1-2</td>
+<td align="left">42.0%</td>
+<td align="left">8.0%</td>
+<td align="left">38.0%</td>
+<td align="left">12.0%</td>
+<td align="left">0.0%</td>
+</tr>
+<tr class="even">
+<td align="left">10+</td>
+<td align="left">0.0%</td>
+<td align="left">23.1%</td>
+<td align="left">38.5%</td>
+<td align="left">7.7%</td>
+<td align="left">30.8%</td>
+</tr>
+<tr class="odd">
+<td align="left">3-4</td>
+<td align="left">36.8%</td>
+<td align="left">10.3%</td>
+<td align="left">25.3%</td>
+<td align="left">23.0%</td>
+<td align="left">4.6%</td>
+</tr>
+<tr class="even">
+<td align="left">5-6</td>
+<td align="left">34.0%</td>
+<td align="left">4.3%</td>
+<td align="left">36.2%</td>
+<td align="left">19.1%</td>
+<td align="left">6.4%</td>
+</tr>
+<tr class="odd">
+<td align="left">7-9</td>
+<td align="left">29.4%</td>
+<td align="left">0.0%</td>
+<td align="left">17.6%</td>
+<td align="left">35.3%</td>
+<td align="left">17.6%</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="welcome-chart-1" class="section level2">
+<h2>Welcome chart</h2>
+<div id="essentials-1" class="section level3 tabset">
+<h3>Essentials</h3>
+<div id="graph-14" class="section level4">
+<h4>Graph</h4>
+<p><img src="bivariates_files/figure-html/unnamed-chunk-29-1.png" width="672" /></p>
+</div>
+<div id="table-14" class="section level4">
+<h4>Table</h4>
+<table>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="left">Anri</th>
+<th align="left">Taeko Onuki</th>
+<th align="left">Takako Mamiya</th>
+<th align="left">Tatsuro Yamashita</th>
+<th align="left">Toshiki Kadomatsu</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">1-2</td>
+<td align="left">26.5%</td>
+<td align="left">10.2%</td>
+<td align="left">10.2%</td>
+<td align="left">46.9%</td>
+<td align="left">6.1%</td>
+</tr>
+<tr class="even">
+<td align="left">10+</td>
+<td align="left">23.1%</td>
+<td align="left">23.1%</td>
+<td align="left">7.7%</td>
+<td align="left">15.4%</td>
+<td align="left">30.8%</td>
+</tr>
+<tr class="odd">
+<td align="left">3-4</td>
+<td align="left">21.8%</td>
+<td align="left">9.2%</td>
+<td align="left">6.9%</td>
+<td align="left">41.4%</td>
+<td align="left">20.7%</td>
+</tr>
+<tr class="even">
+<td align="left">5-6</td>
+<td align="left">17.0%</td>
+<td align="left">23.4%</td>
+<td align="left">6.4%</td>
+<td align="left">36.2%</td>
+<td align="left">17.0%</td>
+</tr>
+<tr class="odd">
+<td align="left">7-9</td>
+<td align="left">6.2%</td>
+<td align="left">37.5%</td>
+<td align="left">0.0%</td>
+<td align="left">31.2%</td>
+<td align="left">25.0%</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="shenanigans-and-tomfoolery-1" class="section level2">
+<h2>Shenanigans and tomfoolery</h2>
+<div id="ymo-1" class="section level3 tabset">
+<h3>YMO</h3>
+<div id="graph-15" class="section level4">
+<h4>Graph</h4>
+<p><img src="bivariates_files/figure-html/unnamed-chunk-31-1.png" width="672" /></p>
+</div>
+<div id="table-15" class="section level4">
+<h4>Table</h4>
+<table>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="left">Haruomi Hosono</th>
+<th align="left">Ryuichi Sakamoto</th>
+<th align="left">Yukihiro Takahashi</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Less than a year</td>
+<td align="left">NaN%</td>
+<td align="left">NaN%</td>
+<td align="left">NaN%</td>
+</tr>
+<tr class="even">
+<td align="left">1-2</td>
+<td align="left">36.8%</td>
+<td align="left">39.5%</td>
+<td align="left">23.7%</td>
+</tr>
+<tr class="odd">
+<td align="left">3-4</td>
+<td align="left">33.3%</td>
+<td align="left">37.7%</td>
+<td align="left">29.0%</td>
+</tr>
+<tr class="even">
+<td align="left">5-6</td>
+<td align="left">29.7%</td>
+<td align="left">40.5%</td>
+<td align="left">29.7%</td>
+</tr>
+<tr class="odd">
+<td align="left">7-9</td>
+<td align="left">50.0%</td>
+<td align="left">43.8%</td>
+<td align="left">6.2%</td>
+</tr>
+<tr class="even">
+<td align="left">10+</td>
+<td align="left">45.5%</td>
+<td align="left">54.5%</td>
+<td align="left">0.0%</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="relationship-status-1" class="section level3 tabset">
+<h3>Relationship status</h3>
+<div id="graph-16" class="section level4">
+<h4>Graph</h4>
+<p><img src="bivariates_files/figure-html/unnamed-chunk-33-1.png" width="672" /></p>
+</div>
+<div id="table-16" class="section level4">
+<h4>Table</h4>
+<table>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="left">Single</th>
+<th align="left">In a relationship</th>
+<th align="left">Civil union</th>
+<th align="left">Married</th>
+<th align="left">Divorced/separated</th>
+<th align="left">Widowed</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">1-2</td>
+<td align="left">2.3%</td>
+<td align="left">4.7%</td>
+<td align="left">14.0%</td>
+<td align="left">74.4%</td>
+<td align="left">0.0%</td>
+<td align="left">4.7%</td>
+</tr>
+<tr class="even">
+<td align="left">10+</td>
+<td align="left">0.0%</td>
+<td align="left">0.0%</td>
+<td align="left">18.2%</td>
+<td align="left">63.6%</td>
+<td align="left">9.1%</td>
+<td align="left">9.1%</td>
+</tr>
+<tr class="odd">
+<td align="left">3-4</td>
+<td align="left">5.3%</td>
+<td align="left">1.3%</td>
+<td align="left">4.0%</td>
+<td align="left">77.3%</td>
+<td align="left">5.3%</td>
+<td align="left">6.7%</td>
+</tr>
+<tr class="even">
+<td align="left">5-6</td>
+<td align="left">4.7%</td>
+<td align="left">2.3%</td>
+<td align="left">9.3%</td>
+<td align="left">62.8%</td>
+<td align="left">11.6%</td>
+<td align="left">9.3%</td>
+</tr>
+<tr class="odd">
+<td align="left">7-9</td>
+<td align="left">0.0%</td>
+<td align="left">0.0%</td>
+<td align="left">13.3%</td>
+<td align="left">66.7%</td>
+<td align="left">13.3%</td>
+<td align="left">6.7%</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="obi-1" class="section level3 tabset">
+<h3>Obi</h3>
+<div id="graph-17" class="section level4">
+<h4>Graph</h4>
+<p><img src="bivariates_files/figure-html/unnamed-chunk-35-1.png" width="672" /></p>
+</div>
+<div id="table-17" class="section level4">
+<h4>Table</h4>
+<table>
+<colgroup>
+<col width="4%" />
+<col width="12%" />
+<col width="12%" />
+<col width="25%" />
+<col width="45%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="left">I love them</th>
+<th align="left">I hate them</th>
+<th align="left">I’m indifferent to them</th>
+<th align="left">Whoever asked this question gets nOBItches</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">1-2</td>
+<td align="left">24.4%</td>
+<td align="left">0.0%</td>
+<td align="left">29.3%</td>
+<td align="left">46.3%</td>
+</tr>
+<tr class="even">
+<td align="left">10+</td>
+<td align="left">0.0%</td>
+<td align="left">9.1%</td>
+<td align="left">63.6%</td>
+<td align="left">27.3%</td>
+</tr>
+<tr class="odd">
+<td align="left">3-4</td>
+<td align="left">36.1%</td>
+<td align="left">1.4%</td>
+<td align="left">27.8%</td>
+<td align="left">34.7%</td>
+</tr>
+<tr class="even">
+<td align="left">5-6</td>
+<td align="left">31.0%</td>
+<td align="left">7.1%</td>
+<td align="left">33.3%</td>
+<td align="left">28.6%</td>
+</tr>
+<tr class="odd">
+<td align="left">7-9</td>
+<td align="left">29.4%</td>
+<td align="left">5.9%</td>
+<td align="left">41.2%</td>
+<td align="left">23.5%</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="casiopea-1" class="section level3 tabset">
+<h3>Casiopea</h3>
+<div id="graph-18" class="section level4">
+<h4>Graph</h4>
+<p><img src="bivariates_files/figure-html/unnamed-chunk-37-1.png" width="672" /></p>
+</div>
+<div id="table-18" class="section level4">
+<h4>Table</h4>
+<table>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="left">Mint Jams</th>
+<th align="left">Mint James</th>
+<th align="left">Mid Jams</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">1-2</td>
+<td align="left">81.6%</td>
+<td align="left">12.2%</td>
+<td align="left">6.1%</td>
+</tr>
+<tr class="even">
+<td align="left">10+</td>
+<td align="left">83.3%</td>
+<td align="left">0.0%</td>
+<td align="left">16.7%</td>
+</tr>
+<tr class="odd">
+<td align="left">3-4</td>
+<td align="left">76.5%</td>
+<td align="left">12.3%</td>
+<td align="left">11.1%</td>
+</tr>
+<tr class="even">
+<td align="left">5-6</td>
+<td align="left">66.7%</td>
+<td align="left">17.8%</td>
+<td align="left">15.6%</td>
+</tr>
+<tr class="odd">
+<td align="left">7-9</td>
+<td align="left">70.6%</td>
+<td align="left">5.9%</td>
+<td align="left">23.5%</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="blud-1" class="section level3 tabset">
+<h3>Blud</h3>
+<div id="graph-19" class="section level4">
+<h4>Graph</h4>
+<p><img src="bivariates_files/figure-html/unnamed-chunk-39-1.png" width="672" /></p>
+</div>
+<div id="table-19" class="section level4">
+<h4>Table</h4>
+<table>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="left">Yukihiro Takahashi</th>
+<th align="left">Blud</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">1-2</td>
+<td align="left">54.8%</td>
+<td align="left">45.2%</td>
+</tr>
+<tr class="even">
+<td align="left">10+</td>
+<td align="left">66.7%</td>
+<td align="left">33.3%</td>
+</tr>
+<tr class="odd">
+<td align="left">3-4</td>
+<td align="left">53.4%</td>
+<td align="left">46.6%</td>
+</tr>
+<tr class="even">
+<td align="left">5-6</td>
+<td align="left">35.0%</td>
+<td align="left">65.0%</td>
+</tr>
+<tr class="odd">
+<td align="left">7-9</td>
+<td align="left">64.3%</td>
+<td align="left">35.7%</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div id="misc" class="section level1">
+<h1>Misc</h1>
+<div id="test" class="section level2">
+<h2>Test</h2>
+</div>
+</div>
 
 
 
+</div>
+</div>
 
 </div>
 
@@ -310,6 +3193,35 @@ $(document).ready(function () {
 
 <!-- code folding -->
 
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>

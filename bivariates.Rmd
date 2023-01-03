@@ -1,6 +1,1243 @@
 ---
 title: "Bivariates, regressions, etc"
-output: html_document
+output: 
+  html_document:
+      toc: true
+      toc_float: true
 ---
 
-Under construction.
+```{r setup, include=FALSE}
+library(tidyverse)
+library(patchwork)
+library(purrr)
+library(broom)
+library(readxl)
+library(ggtext)
+library(logisticPCA)
+
+theme_set(theme_minimal() + theme(legend.position = "bottom"))
+```
+
+```{r import, include=FALSE}
+# Read in dataset and rename variables
+census = read_excel("./City Pop+ Census 2023 (Responses).xlsx") %>% 
+  janitor::clean_names() %>% 
+  mutate(id = row_number()) %>% 
+  rename(
+    age = how_old_are_you, 
+    gender = what_is_your_gender_select_one_you_most_identify_with,
+    locale = where_are_you_from,
+    us_state = if_youre_from_the_u_s_what_state_are_you_from,
+    know_years = how_many_years_have_you_known_about_city_pop,
+    know_first = how_did_you_first_discover_city_pop_select_all_that_apply,
+    join_years = what_year_did_you_join_city_pop,
+    listen_where = what_do_you_use_to_acquire_listen_to_city_pop_music_select_all_that_apply,
+    listen_format = what_are_your_preferred_formats_of_listening_to_city_pop_select_all_that_apply,
+    own_amount = do_you_own_any_city_pop_music_as_physical_media_records_c_ds_tapes,
+    other_communities = are_you_a_member_of_any_of_these_communities_select_all_that_apply,
+    other_accounts = do_you_have_an_account_on_any_of_these_sites_select_all_that_apply,
+    chart_essentials = who_is_your_favorite_artist_from_the_essentials_section_of_the_welcome_chart,
+    chart_otherclassics = who_is_your_favorite_artist_from_the_other_classics_section_of_the_welcome_chart,
+    chart_idolpop = who_is_your_favorite_artist_from_the_idol_pop_section_of_the_welcome_chart,
+    chart_fusion = who_is_your_favorite_artist_from_the_jazz_fusion_section_of_the_welcome_chart,
+    chart_synthpop = who_is_your_favorite_artist_from_the_synthpop_section_of_the_welcome_chart,
+    chart_folk = who_is_your_favorite_artist_from_the_folk_section_of_the_welcome_chart,
+    chart_other = who_is_your_favorite_artist_from_the_other_notable_releases_section_of_the_welcome_chart,
+    fave_emote = out_of_these_server_emotes_which_is_your_favorite,
+    fave_sticker = out_of_these_server_stickers_which_is_your_favorite,
+    ymo = who_is_the_best_member_of_yellow_magic_orchestra_ymo,
+    tats = what_is_the_relationship_status_of_tatsuro_yamashita_and_mariya_takeuchi,
+    obi = what_are_your_thoughts_on_obis,
+    casiopea = whats_that_one_casiopea_album_with_the_jar_and_spoon,
+    blud = who_is_this_man
+    ) %>% 
+  mutate(
+    know_first = recode(know_first, "Through samples in mainstream music" = "Through samples in mainstream music, Gone gone thank you - Tyler the creator samples Fragile by Tatsuro")
+  )
+```
+
+```{r multiple_choice_sep, include=FALSE}
+# Separate multiple choice questions into their own columns
+
+# know_first
+census_df_1 = census %>% 
+  separate_rows(know_first, sep = ", ") %>% 
+  mutate(
+    know_first = ifelse(
+      know_first %in% c("YouTube recommendations", "TikTok", "Heard it in a TV show/anime/movie", "Heard it in a mix", "Heard it in a meme/referenced in a meme", "Through samples in mainstream music", "Through vaporwave/future funk", "Discogs/RYM/other digging sites", "Digging in a record store", "Recommended by a friend/someone else", "Grew up listening to it"), know_first, "Other")
+  ) %>% 
+  count(id, know_first) %>% 
+  pivot_wider(
+    id_cols = id,
+    names_from = know_first,
+    values_from = n,
+    values_fn = length,
+    names_prefix = "know_first_"
+  ) %>% 
+  janitor::clean_names() %>% 
+  left_join(census, by = 'id')
+
+# listen/acquire from
+census_df_2 = census %>% 
+  separate_rows(listen_where, sep = ", ") %>% 
+  count(id, listen_where) %>% 
+  pivot_wider(
+    id_cols = id,
+    names_from = listen_where,
+    values_from = n,
+    values_fn = length,
+    names_prefix = "listen_where_"
+  ) %>% 
+  janitor::clean_names() %>% 
+  left_join(census_df_1, by = 'id')
+
+# listen/acquire format
+census_df_3 = census %>% 
+  separate_rows(listen_format, sep = ", ") %>% 
+  count(id, listen_format) %>% 
+  pivot_wider(
+    id_cols = id,
+    names_from = listen_format,
+    values_from = n,
+    values_fn = length,
+    names_prefix = "listen_format_"
+  ) %>% 
+  janitor::clean_names() %>% 
+  left_join(census_df_2, by = 'id')
+
+# other communities
+census_df_4 = census %>% 
+  separate_rows(other_communities, sep = ", ") %>% 
+  count(id, other_communities) %>% 
+  pivot_wider(
+    id_cols = id,
+    names_from = other_communities,
+    values_from = n,
+    values_fn = length,
+    names_prefix = "other_communities_"
+  ) %>% 
+  janitor::clean_names() %>% 
+  left_join(census_df_3, by = 'id')
+
+# other sites
+census_df_5 = census %>% 
+  separate_rows(other_accounts, sep = ", ") %>% 
+  count(id, other_accounts) %>% 
+  pivot_wider(
+    id_cols = id,
+    names_from = other_accounts,
+    values_from = n,
+    values_fn = length,
+    names_prefix = "other_accounts"
+  ) %>% 
+  janitor::clean_names() %>% 
+  left_join(census_df_4, by = 'id')
+
+census_final = census_df_5 %>% 
+  relocate(id, timestamp, age, gender, locale, us_state, join_years)
+
+```
+**Under construction**
+
+# Age group comparisons
+
+## Interaction with city pop
+
+### Where discovered city pop {.tabset}
+
+#### Graph
+
+```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+a = census_final %>% 
+  subset(is.na(age)==FALSE) %>% 
+  subset(is.na(know_first)==FALSE) %>% 
+  group_by(age) %>% 
+  summarize(total = n()) 
+
+graph_age_know_first = census_final %>% 
+  separate_rows(know_first, sep = ", ") %>% 
+  count(age, know_first) %>%
+  group_by(age, know_first) %>%
+  mutate(
+    know_first = ifelse(
+      know_first %in% c("YouTube recommendations", "TikTok", "Heard it in a TV show/anime/movie", "Heard it in a mix", "Heard it in a meme/referenced in a meme", "Through samples in mainstream music", "Through vaporwave/future funk", "Discogs/RYM/other digging sites", "Digging in a record store", "Recommended by a friend/someone else", "Grew up listening to it"), know_first, "Other"),
+    know_first = factor(know_first, levels = c("YouTube recommendations", "TikTok", "Heard it in a TV show/anime/movie", "Heard it in a mix", "Heard it in a meme/referenced in a meme", "Through samples in mainstream music", "Through vaporwave/future funk", "Discogs/RYM/other digging sites", "Digging in a record store", "Recommended by a friend/someone else", "Grew up listening to it", "Other"))
+  ) %>% 
+  left_join(x=., y=a, by = "age") %>% 
+  subset(is.na(age)==FALSE) %>% 
+  subset(is.na(know_first)==FALSE) %>% 
+  mutate(freq = n/total,
+    age = factor(age, levels = c("13-16", "17-20", "21-24", "25-29", "30-33", ">33"))) %>% 
+  {. ->> b } %>%
+  ggplot(aes(
+    x = age, 
+    fill = know_first,
+    y = freq
+    )) + 
+  geom_col(position = "dodge") +
+  scale_y_continuous(labels = scales::percent) +
+  scale_fill_viridis_d() +
+  theme(legend.position = "bottom", plot.caption = element_markdown(hjust = 0), legend.title = element_blank(),
+        legend.text = element_text(size = 7)) +
+  labs(
+    subtitle = "By age group, City Pop+ 2023 Census",
+    title = "How did you first discover city pop?",
+    x = "Age group",
+    y = ""
+    ) +
+  guides(fill = guide_legend(nrow = 4))
+
+graph_age_know_first
+```
+
+#### Table
+
+```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+b %>% 
+  select(-total) %>% 
+  rename(percent = freq) %>% 
+  mutate(percent = paste(round(percent*100, digits = 1), "%", sep="")) %>% 
+  arrange(age, know_first) %>% 
+  knitr::kable()
+```
+
+
+### Where one listens to city pop {.tabset}
+
+#### Graph
+
+```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+a = census_final %>% 
+  subset(is.na(age)==FALSE) %>% 
+  subset(is.na(listen_where)==FALSE) %>% 
+  group_by(age) %>% 
+  summarize(total = n()) 
+
+graph_age_listen_where = census_final %>% 
+  separate_rows(listen_where, sep = ", ") %>%
+  count(age, listen_where) %>%
+  group_by(age, listen_where) %>% 
+  mutate(
+    listen_where = recode(listen_where,
+                          "Mix/Web radio sites (SoundCloud/Mixcloud/NTS/etc.)" = "Mix/Web radio",
+                          "Physical media (vinyl records/CDs/tapes/etc.)" = "Physical media",
+                          "Purchased libraries (iTunes/OTOTOY/mora/etc.)" = "Purchased digital files",
+                          "Streaming services (Spotify/Apple Music/etc.)" = "Streaming services",
+                          "Video sites (YouTube/Niconico/bilibili/etc.)" = "Video sites",
+                          "Yarr! I sail the torrential seas to get my booty! (rutracker/JPS/RED/OPS/etc.)" = "Torr- [redacted]"),
+    listen_where = factor(listen_where, levels = c("Streaming services", "Video sites", "Physical media", "JPOP80SS", "Soulseek", "Torr- [redacted]", "Mix/Web radio", "Purchased digital files"))
+    ) %>% 
+  left_join(x=., y=a, by = "age") %>% 
+  subset(is.na(age)==FALSE) %>% 
+  subset(is.na(listen_where)==FALSE) %>% 
+  mutate(freq = n/total,
+    age = factor(age, levels = c("13-16", "17-20", "21-24", "25-29", "30-33", ">33"))) %>% 
+  {. ->> b } %>%
+  ggplot(aes(
+    x = age, 
+    fill = listen_where,
+    y = freq
+    )) + 
+  geom_col(position = "dodge") +
+  scale_y_continuous(labels = scales::percent) +
+  scale_fill_viridis_d() +
+  theme(legend.position = "bottom", plot.caption = element_markdown(hjust = 0), legend.title = element_blank()) +
+  labs(
+    subtitle = "By age group, City Pop+ 2023 Census",
+    title = "What do you use to acquire/listen to city pop music?",
+    x = "Age group",
+    y = ""
+    ) +
+  guides(fill = guide_legend(nrow = 2))
+
+graph_age_listen_where
+```
+
+#### Table
+
+```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+b %>% 
+  select(-total) %>% 
+  rename(percent = freq) %>% 
+  mutate(percent = paste(round(percent*100, digits = 1), "%", sep="")) %>% 
+  arrange(age, listen_where) %>% 
+  knitr::kable()
+```
+
+
+
+### Preferred format for listening {.tabset}
+
+#### Graph
+
+```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+a = census_final %>% 
+  subset(is.na(age)==FALSE) %>% 
+  subset(is.na(listen_format)==FALSE) %>% 
+  group_by(age) %>% 
+  summarize(total = n()) 
+
+graph_age_listen_format = census_final %>% 
+  separate_rows(listen_format, sep = ", ") %>% 
+  count(age, listen_format) %>%
+  group_by(age, listen_format) %>%
+  mutate(
+    listen_format = factor(listen_format, levels = c("Full albums", "Single songs", "Playlists", "Mixes", "Random shuffle"))
+  ) %>% 
+  left_join(x=., y=a, by = "age") %>% 
+  subset(is.na(age)==FALSE) %>% 
+  subset(is.na(listen_format)==FALSE) %>% 
+  mutate(freq = n/total,
+    age = factor(age, levels = c("13-16", "17-20", "21-24", "25-29", "30-33", ">33"))) %>% 
+  {. ->> b } %>%
+  ggplot(aes(
+    x = age, 
+    fill = listen_format,
+    y = freq
+    )) + 
+  geom_col(position = "dodge") +
+  scale_y_continuous(labels = scales::percent) +
+  scale_fill_viridis_d() +
+  theme(legend.position = "bottom", plot.caption = element_markdown(hjust = 0), legend.title = element_blank()) +
+  labs(
+    subtitle = "By age group, City Pop+ 2023 Census",
+    title = "How did you first discover city pop?",
+    x = "Age group",
+    y = ""
+    ) +
+  guides(fill = guide_legend(nrow = 1))
+
+graph_age_listen_format
+```
+
+#### Table
+
+```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+b %>% 
+  select(-total) %>% 
+  rename(percent = freq) %>% 
+  mutate(percent = paste(round(percent*100, digits = 1), "%", sep="")) %>% 
+  arrange(age, listen_format) %>% 
+  knitr::kable()
+```
+
+### Physical media ownership {.tabset}
+
+#### Graph
+
+```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+graph_age_own_amount = census_final %>% 
+  select(age, own_amount) %>% 
+  group_by(age, own_amount) %>% 
+  mutate(
+    age = factor(age, levels = c("13-16", "17-20", "21-24", "25-29", "30-33", ">33", NA)),
+    own_amount = factor(own_amount, levels = c("No, but I want to", "No, I prefer digital media", "Yes, a couple (<10)", "Yes, quite a bit (>10)", "Yes, a lot (>100)"))
+    ) %>% 
+  subset(is.na(age)==FALSE) %>% 
+  subset(is.na(own_amount)==FALSE) %>% 
+  {. ->> dd } %>%
+  summarize(total = n()) %>% 
+  mutate(freq = total/sum(total)) %>% 
+  ggplot(aes(
+    x = factor(age), 
+    fill = own_amount,
+    y = freq
+    )) + 
+  geom_bar(position = "fill", stat="identity") +
+  scale_y_continuous(labels = scales::percent) +
+  scale_fill_viridis_d() +
+  theme(legend.position = "bottom", plot.caption = element_markdown(hjust = 0), legend.title = element_blank()) +
+  labs(
+    subtitle = "By age group, City Pop+ 2023 Census",
+    title = "Do you own any city pop music as physical media?",
+    x = "Age group",
+    y = ""
+    ) +
+  guides(fill = guide_legend(nrow = 2))
+
+graph_age_own_amount
+```
+
+#### Table
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+apply(
+  prop.table(table(dd$age, dd$own_amount), margin=1)*100,
+  c(1,2),
+  function(u) sprintf("%.1f%%", u)
+  ) %>% 
+  knitr::kable()
+
+# testing = fisher.test(table(b$age, b$own_amount), workspace = 2e8) 
+# testing %>% glance() %>% knitr::kable()
+```
+
+## Welcome chart
+
+### Essentials {.tabset}
+
+#### Graph
+
+```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+graph_age_chart_essentials = census_final %>% 
+  select(age, chart_essentials) %>% 
+  group_by(age, chart_essentials) %>% 
+  mutate(
+    age = factor(age, levels = c("13-16", "17-20", "21-24", "25-29", "30-33", ">33", NA)),
+    chart_essentials = factor(chart_essentials, levels = c("Anri", "Taeko Onuki", "Takako Mamiya", "Tatsuro Yamashita", "Toshiki Kadomatsu"))
+    ) %>% 
+  subset(is.na(age)==FALSE) %>% 
+  subset(is.na(chart_essentials)==FALSE) %>% 
+  {. ->> b } %>%
+  summarize(total = n()) %>% 
+  mutate(freq = total/sum(total)) %>% 
+  ggplot(aes(
+    x = factor(age), 
+    fill = chart_essentials,
+    y = freq
+    )) + 
+  geom_bar(position = "fill", stat="identity") +
+  scale_y_continuous(labels = scales::percent) +
+  scale_fill_brewer(palette="Set3") +
+  theme(legend.position = "bottom", plot.caption = element_markdown(hjust = 0), legend.title = element_blank()) +
+  labs(
+    subtitle = "By age group, City Pop+ 2023 Census",
+    title = "Who is your favorite artist from the \"Essentials\" section of the Welcome Chart?",
+    x = "Age group",
+    y = ""
+    ) +
+  guides(fill = guide_legend(nrow = 1))
+
+graph_age_chart_essentials
+```
+
+#### Table
+
+```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+apply(
+  prop.table(table(b$age, b$chart_essentials), margin=1)*100,
+  c(1,2),
+  function(u) sprintf("%.1f%%", u)
+  ) %>% 
+  knitr::kable()
+```
+
+## Shenanigans and tomfoolery
+
+### YMO {.tabset}
+
+#### Graph
+
+```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+graph_age_ymo = census_final %>% 
+  select(age, ymo) %>% 
+  group_by(age, ymo) %>% 
+  mutate(
+    age = factor(age, levels = c("13-16", "17-20", "21-24", "25-29", "30-33", ">33", NA))
+    ) %>% 
+  subset(is.na(age)==FALSE) %>% 
+  subset(is.na(ymo)==FALSE) %>% 
+  {. ->> b } %>%
+  summarize(total = n()) %>% 
+  mutate(freq = total/sum(total)) %>% 
+  ggplot(aes(
+    x = factor(age), 
+    fill = ymo,
+    y = freq
+    )) + 
+  geom_bar(position = "fill", stat="identity") +
+  scale_y_continuous(labels = scales::percent) +
+  scale_fill_brewer(palette = "Set2") +
+  theme(legend.position = "bottom", plot.caption = element_markdown(hjust = 0), legend.title = element_blank()) +
+  labs(
+    subtitle = "By age group, City Pop+ 2023 Census",
+    title = "Who is the best member of Yellow Magic Orchestra (YMO)?",
+    x = "Age group",
+    y = ""
+    ) +
+  guides(fill = guide_legend(nrow = 1))
+
+graph_age_ymo
+```
+
+#### Table
+
+```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+apply(
+  prop.table(table(b$age, b$ymo), margin=1)*100,
+  c(1,2),
+  function(u) sprintf("%.1f%%", u)
+  ) %>% 
+  knitr::kable()
+
+# testing = chisq.test(b$age, b$ymo) 
+# testing %>% glance() %>% knitr::kable()
+```
+
+### Relationship status {.tabset}
+
+#### Graph
+
+```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+graph_age_tats = census_final %>% 
+  select(age, tats) %>% 
+  group_by(age, tats) %>% 
+  mutate(
+    age = factor(age, levels = c("13-16", "17-20", "21-24", "25-29", "30-33", ">33", NA)),
+    tats = factor(tats, levels = c("Single", "In a relationship", "Civil union", "Married", "Divorced/separated", "Widowed"))
+    ) %>% 
+  subset(is.na(age)==FALSE) %>% 
+  subset(is.na(tats)==FALSE) %>% 
+  {. ->> b } %>%
+  summarize(total = n()) %>% 
+  mutate(freq = total/sum(total)) %>% 
+  ggplot(aes(
+    x = factor(age), 
+    fill = tats,
+    y = freq
+    )) + 
+  geom_bar(position = "fill", stat="identity") +
+  scale_y_continuous(labels = scales::percent) +
+  scale_fill_brewer(palette = "Set2") +
+  theme(legend.position = "bottom", plot.caption = element_markdown(hjust = 0), legend.title = element_blank()) +
+  labs(
+    subtitle = "By age group, City Pop+ 2023 Census",
+    title = "What is the relationship status of Tatsuro Yamashita and Mariya Takeuchi?",
+    x = "Age group",
+    y = ""
+    ) +
+  guides(fill = guide_legend(nrow = 2))
+
+graph_age_tats
+```
+
+#### Table
+
+```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+apply(
+  prop.table(table(b$age, b$tats), margin=1)*100,
+  c(1,2),
+  function(u) sprintf("%.1f%%", u)
+  ) %>% 
+  knitr::kable()
+
+# testing = chisq.test(b$age, b$tats) 
+# testing %>% glance() %>% knitr::kable()
+```
+
+### Obi {.tabset}
+
+#### Graph
+
+```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+graph_age_obi = census_final %>% 
+  select(age, obi) %>% 
+  group_by(age, obi) %>% 
+  mutate(
+    age = factor(age, levels = c("13-16", "17-20", "21-24", "25-29", "30-33", ">33", NA)),
+    obi = factor(obi, levels = c("I love them", "I hate them", "I'm indifferent to them", "Whoever asked this question gets nOBItches", NA))
+    ) %>% 
+  subset(is.na(age)==FALSE) %>% 
+  subset(is.na(obi)==FALSE) %>% 
+  {. ->> b } %>%
+  summarize(total = n()) %>% 
+  mutate(freq = total/sum(total)) %>% 
+  ggplot(aes(
+    x = factor(age), 
+    fill = obi,
+    y = freq
+    )) + 
+  geom_bar(position = "fill", stat="identity") +
+  scale_y_continuous(labels = scales::percent) +
+  scale_fill_viridis_d() +
+  theme(legend.position = "bottom", plot.caption = element_markdown(hjust = 0), legend.title = element_blank()) +
+  labs(
+    subtitle = "By age group, City Pop+ 2023 Census",
+    title = "What are your thoughts on obis?",
+    x = "Age group",
+    y = ""
+    ) +
+  guides(fill = guide_legend(nrow = 2))
+
+graph_age_obi
+```
+
+#### Table
+
+```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+apply(
+  prop.table(table(b$age, b$obi), margin=1)*100,
+  c(1,2),
+  function(u) sprintf("%.1f%%", u)
+  ) %>% 
+  knitr::kable()
+
+# testing = fisher.test(table(b$age, b$obi), workspace = 2e8) 
+# testing %>% glance() %>% knitr::kable()
+```
+
+### Casiopea {.tabset}
+
+#### Graph
+```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+graph_age_casiopea = census_final %>% 
+  select(age, casiopea) %>% 
+  group_by(age, casiopea) %>% 
+  mutate(
+    age = factor(age, levels = c("13-16", "17-20", "21-24", "25-29", "30-33", ">33", NA)),
+    casiopea = factor(casiopea, levels = c("Mint Jams", "Mint James", "Mid Jams"))
+    ) %>% 
+  subset(is.na(age)==FALSE) %>% 
+  subset(is.na(casiopea)==FALSE) %>% 
+  {. ->> b } %>%
+  summarize(total = n()) %>% 
+  mutate(freq = total/sum(total)) %>% 
+  ggplot(aes(
+    x = factor(age), 
+    fill = casiopea,
+    y = freq
+    )) + 
+  geom_bar(position = "fill", stat="identity") +
+  scale_y_continuous(labels = scales::percent) +
+  scale_fill_viridis_d() +
+  theme(legend.position = "bottom", plot.caption = element_markdown(hjust = 0), legend.title = element_blank()) +
+  labs(
+    subtitle = "By age group, City Pop+ 2023 Census",
+    title = "What's that one Casiopea album with the jar and spoon?",
+    x = "Age group",
+    y = ""
+    ) +
+  guides(fill = guide_legend(nrow = 1))
+
+graph_age_casiopea
+```
+
+#### Table
+
+```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+apply(
+  prop.table(table(b$age, b$casiopea), margin=1)*100,
+  c(1,2),
+  function(u) sprintf("%.1f%%", u)
+  ) %>% 
+  knitr::kable()
+
+# testing = chisq.test(b$age, b$casiopea) 
+# testing %>% glance() %>% knitr::kable()
+```
+
+### Blud {.tabset}
+
+#### Graph
+```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+graph_age_blud = census_final %>% 
+  select(age, blud) %>% 
+  group_by(age, blud) %>% 
+  mutate(
+    age = factor(age, levels = c("13-16", "17-20", "21-24", "25-29", "30-33", ">33", NA)),
+    blud = factor(blud, levels = c("Yukihiro Takahashi", "Blud"))
+    ) %>% 
+  subset(is.na(age)==FALSE) %>% 
+  subset(is.na(blud)==FALSE) %>% 
+  {. ->> b } %>%
+  summarize(total = n()) %>% 
+  mutate(freq = total/sum(total)) %>% 
+  ggplot(aes(
+    x = factor(age), 
+    fill = blud,
+    y = freq
+    )) + 
+  geom_bar(position = "fill", stat="identity") +
+  scale_y_continuous(labels = scales::percent) +
+  scale_fill_viridis_d() +
+  theme(legend.position = "bottom", plot.caption = element_markdown(hjust = 0), legend.title = element_blank()) +
+  labs(
+    subtitle = "By age group, City Pop+ 2023 Census",
+    title = "Who is this man?",
+    x = "Age group",
+    y = ""
+    ) +
+  guides(fill = guide_legend(nrow = 2))
+
+graph_age_blud
+```
+
+#### Table
+
+```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+apply(
+  prop.table(table(b$age, b$blud), margin=1)*100,
+  c(1,2),
+  function(u) sprintf("%.1f%%", u)
+  ) %>% 
+  knitr::kable()
+
+# testing = chisq.test(b$age, b$blud) 
+# testing %>% glance() %>% knitr::kable()
+```
+
+
+# Number of years known city pop
+
+## Interaction with city pop
+
+### Where discovered city pop {.tabset}
+
+#### Graph
+
+```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+a = census_final %>% 
+  subset(is.na(know_years)==FALSE) %>% 
+  subset(is.na(know_first)==FALSE) %>% 
+  group_by(know_years) %>% 
+  summarize(total = n()) 
+
+graph_know_years_know_first = census_final %>% 
+  separate_rows(know_first, sep = ", ") %>% 
+  subset(know_years!="Less than a year") %>% count(know_years,know_first) %>%
+  group_by(know_years,know_first) %>%
+  mutate(
+    know_first = ifelse(
+      know_first %in% c("YouTube recommendations", "TikTok", "Heard it in a TV show/anime/movie", "Heard it in a mix", "Heard it in a meme/referenced in a meme", "Through samples in mainstream music", "Through vaporwave/future funk", "Discogs/RYM/other digging sites", "Digging in a record store", "Recommended by a friend/someone else", "Grew up listening to it"), know_first, "Other"),
+    know_first = factor(know_first, levels = c("YouTube recommendations", "TikTok", "Heard it in a TV show/anime/movie", "Heard it in a mix", "Heard it in a meme/referenced in a meme", "Through samples in mainstream music", "Through vaporwave/future funk", "Discogs/RYM/other digging sites", "Digging in a record store", "Recommended by a friend/someone else", "Grew up listening to it", "Other"))
+  ) %>% 
+  left_join(x=., y=a, by = "know_years") %>% 
+  subset(is.na(know_years)==FALSE) %>% 
+  subset(is.na(know_first)==FALSE) %>% 
+  mutate(freq = n/total,
+    know_years = factor(know_years, levels = c("Less than a year", "1-2", "3-4", "5-6", "7-9", "10+"))) %>% 
+  {. ->> b } %>%
+  ggplot(aes(
+    x = know_years,
+    fill = know_first,
+    y = freq
+    )) + 
+  geom_col(position = "dodge") +
+  scale_y_continuous(labels = scales::percent) +
+  scale_fill_viridis_d() +
+  theme(legend.position = "bottom", plot.caption = element_markdown(hjust = 0), legend.title = element_blank(),
+        legend.text = element_text(size = 7)) +
+  labs(
+    subtitle = "By years known city pop, City Pop+ 2023 Census",
+    title = "How did you first discover city pop?",
+    x = "Number of years",
+    y = ""
+    ) +
+  guides(fill = guide_legend(nrow = 4))
+
+graph_know_years_know_first
+```
+
+#### Table
+
+```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+b %>% 
+  select(-total) %>% 
+  rename(percent = freq) %>% 
+  mutate(percent = paste(round(percent*100, digits = 1), "%", sep="")) %>% 
+  arrange(know_years,know_first) %>% 
+  knitr::kable()
+```
+
+
+### Where one listens to city pop {.tabset}
+
+#### Graph
+
+```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+a = census_final %>% 
+  subset(is.na(know_years)==FALSE) %>% 
+  subset(is.na(listen_where)==FALSE) %>% 
+  group_by(know_years) %>% 
+  summarize(total = n()) 
+
+graph_know_years_listen_where = census_final %>% 
+  separate_rows(listen_where, sep = ", ") %>%
+  subset(know_years!="Less than a year") %>% count(know_years,listen_where) %>%
+  group_by(know_years,listen_where) %>% 
+  mutate(
+    listen_where = recode(listen_where,
+                          "Mix/Web radio sites (SoundCloud/Mixcloud/NTS/etc.)" = "Mix/Web radio",
+                          "Physical media (vinyl records/CDs/tapes/etc.)" = "Physical media",
+                          "Purchased libraries (iTunes/OTOTOY/mora/etc.)" = "Purchased digital files",
+                          "Streaming services (Spotify/Apple Music/etc.)" = "Streaming services",
+                          "Video sites (YouTube/Niconico/bilibili/etc.)" = "Video sites",
+                          "Yarr! I sail the torrential seas to get my booty! (rutracker/JPS/RED/OPS/etc.)" = "Torr- [redacted]"),
+    listen_where = factor(listen_where, levels = c("Streaming services", "Video sites", "Physical media", "JPOP80SS", "Soulseek", "Torr- [redacted]", "Mix/Web radio", "Purchased digital files"))
+    ) %>% 
+  left_join(x=., y=a, by = "know_years") %>% 
+  subset(is.na(know_years)==FALSE) %>% 
+  subset(is.na(listen_where)==FALSE) %>% 
+  mutate(freq = n/total,
+    know_years = factor(know_years, levels = c("Less than a year", "1-2", "3-4", "5-6", "7-9", "10+"))) %>% 
+  {. ->> b } %>%
+  ggplot(aes(
+    x = know_years,
+    fill = listen_where,
+    y = freq
+    )) + 
+  geom_col(position = "dodge") +
+  scale_y_continuous(labels = scales::percent) +
+  scale_fill_viridis_d() +
+  theme(legend.position = "bottom", plot.caption = element_markdown(hjust = 0), legend.title = element_blank()) +
+  labs(
+    subtitle = "By years known city pop, City Pop+ 2023 Census",
+    title = "What do you use to acquire/listen to city pop music?",
+    x = "Number of years",
+    y = ""
+    ) +
+  guides(fill = guide_legend(nrow = 2))
+
+graph_know_years_listen_where
+```
+
+#### Table
+
+```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+b %>% 
+  select(-total) %>% 
+  rename(percent = freq) %>% 
+  mutate(percent = paste(round(percent*100, digits = 1), "%", sep="")) %>% 
+  arrange(know_years,listen_where) %>% 
+  knitr::kable()
+```
+
+
+
+### Preferred format for listening {.tabset}
+
+#### Graph
+
+```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+a = census_final %>% 
+  subset(is.na(know_years)==FALSE) %>% 
+  subset(is.na(listen_format)==FALSE) %>% 
+  group_by(know_years) %>% 
+  summarize(total = n()) 
+
+graph_know_years_listen_format = census_final %>% 
+  separate_rows(listen_format, sep = ", ") %>% 
+  subset(know_years!="Less than a year") %>% count(know_years,listen_format) %>%
+  group_by(know_years,listen_format) %>%
+  mutate(
+    listen_format = factor(listen_format, levels = c("Full albums", "Single songs", "Playlists", "Mixes", "Random shuffle"))
+  ) %>% 
+  left_join(x=., y=a, by = "know_years") %>% 
+  subset(is.na(know_years)==FALSE) %>% 
+  subset(is.na(listen_format)==FALSE) %>% 
+  mutate(freq = n/total,
+    know_years = factor(know_years, levels = c("Less than a year", "1-2", "3-4", "5-6", "7-9", "10+"))) %>% 
+  {. ->> b } %>%
+  ggplot(aes(
+    x = know_years,
+    fill = listen_format,
+    y = freq
+    )) + 
+  geom_col(position = "dodge") +
+  scale_y_continuous(labels = scales::percent) +
+  scale_fill_viridis_d() +
+  theme(legend.position = "bottom", plot.caption = element_markdown(hjust = 0), legend.title = element_blank()) +
+  labs(
+    subtitle = "By years known city pop, City Pop+ 2023 Census",
+    title = "How did you first discover city pop?",
+    x = "Number of years",
+    y = ""
+    ) +
+  guides(fill = guide_legend(nrow = 1))
+
+graph_know_years_listen_format
+```
+
+#### Table
+
+```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+b %>% 
+  select(-total) %>% 
+  rename(percent = freq) %>% 
+  mutate(percent = paste(round(percent*100, digits = 1), "%", sep="")) %>% 
+  arrange(know_years,listen_format) %>% 
+  knitr::kable()
+```
+
+### Physical media ownership {.tabset}
+
+#### Graph
+
+```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+graph_know_years_own_amount = census_final %>% 
+  subset(know_years!="Less than a year") %>% select(know_years,own_amount) %>% 
+  group_by(know_years,own_amount) %>% 
+  mutate(
+    own_amount = factor(own_amount, levels = c("No, but I want to", "No, I prefer digital media", "Yes, a couple (<10)", "Yes, quite a bit (>10)", "Yes, a lot (>100)"))
+    ) %>% 
+  subset(is.na(know_years)==FALSE) %>% 
+  subset(is.na(own_amount)==FALSE) %>% 
+  {. ->> b } %>%
+  summarize(total = n()) %>% 
+  mutate(freq = total/sum(total)) %>% 
+  ggplot(aes(
+    x = factor(know_years), 
+    fill = own_amount,
+    y = freq
+    )) + 
+  geom_bar(position = "fill", stat="identity") +
+  scale_y_continuous(labels = scales::percent) +
+  scale_fill_viridis_d() +
+  theme(legend.position = "bottom", plot.caption = element_markdown(hjust = 0), legend.title = element_blank()) +
+  labs(
+    subtitle = "By years known city pop, City Pop+ 2023 Census",
+    title = "Do you own any city pop music as physical media?",
+    x = "Number of years",
+    y = ""
+    ) +
+  guides(fill = guide_legend(nrow = 2))
+
+graph_know_years_own_amount
+```
+
+#### Table
+
+```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+apply(
+  prop.table(table(b$know_years, b$own_amount), margin=1)*100,
+  c(1,2),
+  function(u) sprintf("%.1f%%", u)
+  ) %>% 
+  knitr::kable()
+```
+
+## Welcome chart
+
+### Essentials {.tabset}
+
+#### Graph
+
+```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+graph_know_years_chart_essentials = census_final %>% 
+  subset(know_years!="Less than a year") %>% select(know_years,chart_essentials) %>% 
+  group_by(know_years,chart_essentials) %>% 
+  mutate(
+    chart_essentials = factor(chart_essentials, levels = c("Anri", "Taeko Onuki", "Takako Mamiya", "Tatsuro Yamashita", "Toshiki Kadomatsu"))
+    ) %>% 
+  subset(is.na(know_years)==FALSE) %>% 
+  subset(is.na(chart_essentials)==FALSE) %>% 
+  {. ->> b } %>%
+  summarize(total = n()) %>% 
+  mutate(freq = total/sum(total)) %>% 
+  ggplot(aes(
+    x = factor(know_years), 
+    fill = chart_essentials,
+    y = freq
+    )) + 
+  geom_bar(position = "fill", stat="identity") +
+  scale_y_continuous(labels = scales::percent) +
+  scale_fill_brewer(palette="Set3") +
+  theme(legend.position = "bottom", plot.caption = element_markdown(hjust = 0), legend.title = element_blank()) +
+  labs(
+    subtitle = "By years known city pop, City Pop+ 2023 Census",
+    title = "Who is your favorite artist from the \"Essentials\" section of the Welcome Chart?",
+    x = "Number of years",
+    y = ""
+    ) +
+  guides(fill = guide_legend(nrow = 1))
+
+graph_know_years_chart_essentials
+```
+
+#### Table
+
+```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+apply(
+  prop.table(table(b$know_years, b$chart_essentials), margin=1)*100,
+  c(1,2),
+  function(u) sprintf("%.1f%%", u)
+  ) %>% 
+  knitr::kable()
+```
+
+## Shenanigans and tomfoolery
+
+### YMO {.tabset}
+
+#### Graph
+
+```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+graph_know_years_ymo = census_final %>% 
+  subset(know_years!="Less than a year") %>% subset(know_years!="Less than a year") %>% select(know_years,ymo) %>% 
+  group_by(know_years,ymo) %>% 
+  mutate(
+    know_years = factor(know_years, levels = c("Less than a year", "1-2", "3-4", "5-6", "7-9", "10+"))) %>% 
+  subset(is.na(know_years)==FALSE) %>% 
+  subset(is.na(ymo)==FALSE) %>% 
+  {. ->> b } %>%
+  summarize(total = n()) %>% 
+  mutate(freq = total/sum(total)) %>% 
+  ggplot(aes(
+    x = factor(know_years), 
+    fill = ymo,
+    y = freq
+    )) + 
+  geom_bar(position = "fill", stat="identity") +
+  scale_y_continuous(labels = scales::percent) +
+  scale_fill_brewer(palette = "Set2") +
+  theme(legend.position = "bottom", plot.caption = element_markdown(hjust = 0), legend.title = element_blank()) +
+  labs(
+    subtitle = "By years known city pop, City Pop+ 2023 Census",
+    title = "Who is the best member of Yellow Magic Orchestra (YMO)?",
+    x = "Number of years",
+    y = ""
+    ) +
+  guides(fill = guide_legend(nrow = 1))
+
+graph_know_years_ymo
+```
+
+#### Table
+
+```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+apply(
+  prop.table(table(b$know_years, b$ymo), margin=1)*100,
+  c(1,2),
+  function(u) sprintf("%.1f%%", u)
+  ) %>% 
+  knitr::kable()
+
+# testing = chisq.test(b$know_years, b$ymo) 
+# testing %>% glance() %>% knitr::kable()
+```
+
+### Relationship status {.tabset}
+
+#### Graph
+
+```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+graph_know_years_tats = census_final %>% 
+  subset(know_years!="Less than a year") %>% select(know_years,tats) %>% 
+  group_by(know_years,tats) %>% 
+  mutate(
+    tats = factor(tats, levels = c("Single", "In a relationship", "Civil union", "Married", "Divorced/separated", "Widowed"))
+    ) %>% 
+  subset(is.na(know_years)==FALSE) %>% 
+  subset(is.na(tats)==FALSE) %>% 
+  {. ->> b } %>%
+  summarize(total = n()) %>% 
+  mutate(freq = total/sum(total)) %>% 
+  ggplot(aes(
+    x = factor(know_years), 
+    fill = tats,
+    y = freq
+    )) + 
+  geom_bar(position = "fill", stat="identity") +
+  scale_y_continuous(labels = scales::percent) +
+  scale_fill_brewer(palette = "Set2") +
+  theme(legend.position = "bottom", plot.caption = element_markdown(hjust = 0), legend.title = element_blank()) +
+  labs(
+    subtitle = "By years known city pop, City Pop+ 2023 Census",
+    title = "What is the relationship status of Tatsuro Yamashita and Mariya Takeuchi?",
+    x = "Number of years",
+    y = ""
+    ) +
+  guides(fill = guide_legend(nrow = 2))
+
+graph_know_years_tats
+```
+
+#### Table
+
+```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+apply(
+  prop.table(table(b$know_years, b$tats), margin=1)*100,
+  c(1,2),
+  function(u) sprintf("%.1f%%", u)
+  ) %>% 
+  knitr::kable()
+
+# testing = chisq.test(b$know_years, b$tats) 
+# testing %>% glance() %>% knitr::kable()
+```
+
+### Obi {.tabset}
+
+#### Graph
+
+```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+graph_know_years_obi = census_final %>% 
+  subset(know_years!="Less than a year") %>% select(know_years,obi) %>% 
+  group_by(know_years,obi) %>% 
+  mutate(
+    obi = factor(obi, levels = c("I love them", "I hate them", "I'm indifferent to them", "Whoever asked this question gets nOBItches", NA))
+    ) %>% 
+  subset(is.na(know_years)==FALSE) %>% 
+  subset(is.na(obi)==FALSE) %>% 
+  {. ->> b } %>%
+  summarize(total = n()) %>% 
+  mutate(freq = total/sum(total)) %>% 
+  ggplot(aes(
+    x = factor(know_years), 
+    fill = obi,
+    y = freq
+    )) + 
+  geom_bar(position = "fill", stat="identity") +
+  scale_y_continuous(labels = scales::percent) +
+  scale_fill_viridis_d() +
+  theme(legend.position = "bottom", plot.caption = element_markdown(hjust = 0), legend.title = element_blank()) +
+  labs(
+    subtitle = "By years known city pop, City Pop+ 2023 Census",
+    title = "What are your thoughts on obis?",
+    x = "Number of years",
+    y = ""
+    ) +
+  guides(fill = guide_legend(nrow = 2))
+
+graph_know_years_obi
+```
+
+#### Table
+
+```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+apply(
+  prop.table(table(b$know_years, b$obi), margin=1)*100,
+  c(1,2),
+  function(u) sprintf("%.1f%%", u)
+  ) %>% 
+  knitr::kable()
+
+# testing = fisher.test(table(b$know_years, b$obi), workspace = 2e8) 
+# testing %>% glance() %>% knitr::kable()
+```
+
+### Casiopea {.tabset}
+
+#### Graph
+```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+graph_know_years_casiopea = census_final %>% 
+  subset(know_years!="Less than a year") %>% select(know_years,casiopea) %>% 
+  group_by(know_years,casiopea) %>% 
+  mutate(
+    casiopea = factor(casiopea, levels = c("Mint Jams", "Mint James", "Mid Jams"))
+    ) %>% 
+  subset(is.na(know_years)==FALSE) %>% 
+  subset(is.na(casiopea)==FALSE) %>% 
+  {. ->> b } %>%
+  summarize(total = n()) %>% 
+  mutate(freq = total/sum(total)) %>% 
+  ggplot(aes(
+    x = factor(know_years), 
+    fill = casiopea,
+    y = freq
+    )) + 
+  geom_bar(position = "fill", stat="identity") +
+  scale_y_continuous(labels = scales::percent) +
+  scale_fill_viridis_d() +
+  theme(legend.position = "bottom", plot.caption = element_markdown(hjust = 0), legend.title = element_blank()) +
+  labs(
+    subtitle = "By years known city pop, City Pop+ 2023 Census",
+    title = "What's that one Casiopea album with the jar and spoon?",
+    x = "Number of years",
+    y = ""
+    ) +
+  guides(fill = guide_legend(nrow = 1))
+
+graph_know_years_casiopea
+```
+
+#### Table
+
+```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+apply(
+  prop.table(table(b$know_years, b$casiopea), margin=1)*100,
+  c(1,2),
+  function(u) sprintf("%.1f%%", u)
+  ) %>% 
+  knitr::kable()
+
+# testing = chisq.test(b$know_years, b$casiopea) 
+# testing %>% glance() %>% knitr::kable()
+```
+
+### Blud {.tabset}
+
+#### Graph
+```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+graph_know_years_blud = census_final %>% 
+  subset(know_years!="Less than a year") %>% select(know_years,blud) %>% 
+  group_by(know_years,blud) %>% 
+  mutate(
+    blud = factor(blud, levels = c("Yukihiro Takahashi", "Blud"))
+    ) %>% 
+  subset(is.na(know_years)==FALSE) %>% 
+  subset(is.na(blud)==FALSE) %>% 
+  {. ->> b } %>%
+  summarize(total = n()) %>% 
+  mutate(freq = total/sum(total)) %>% 
+  ggplot(aes(
+    x = factor(know_years), 
+    fill = blud,
+    y = freq
+    )) + 
+  geom_bar(position = "fill", stat="identity") +
+  scale_y_continuous(labels = scales::percent) +
+  scale_fill_viridis_d() +
+  theme(legend.position = "bottom", plot.caption = element_markdown(hjust = 0), legend.title = element_blank()) +
+  labs(
+    subtitle = "By years known city pop, City Pop+ 2023 Census",
+    title = "Who is this man?",
+    x = "Number of years",
+    y = ""
+    ) +
+  guides(fill = guide_legend(nrow = 1))
+
+graph_know_years_blud
+```
+
+#### Table
+
+```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
+apply(
+  prop.table(table(b$know_years, b$blud), margin=1)*100,
+  c(1,2),
+  function(u) sprintf("%.1f%%", u)
+  ) %>% 
+  knitr::kable()
+
+# testing = chisq.test(b$know_years, b$blud) 
+# testing %>% glance() %>% knitr::kable()
+```
+
+# Misc
+
+## Test
+
+```{r, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE, eval=FALSE}
+pca_know_first = as.matrix(
+  census_final %>% 
+  select(age, contains("know_first")) %>% 
+  mutate(
+    across(everything(),
+      ~replace(., is.na(.), 0)
+      )
+    ) %>% 
+  select(-know_first) %>% 
+  remove_rownames
+  )
+
+pca_know_first2 = matrix(as.numeric(data.matrix(pca_know_first[,-1])), ncol=12)
+rownames(pca_know_first2) = make.names(pca_know_first[,1], unique = TRUE)
+
+model = logisticPCA(pca_know_first2, k = 6)
+model
+
+logpca_cv = cv.lpca(pca_know_first2, ks = 6, ms = 1:20)
+plot(logpca_cv)
+
+model = logisticPCA(pca_know_first2, k = 2, m = which.min(logpca_cv))
+model
+
+age = rownames(pca_know_first2)
+
+plot(model, type = "scores") + 
+  geom_point(aes(color = age)) + 
+  ggtitle("Logistic PCA") +
+  theme(legend.position = "none")
+```
+
