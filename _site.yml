@@ -3,8 +3,10 @@ output_dir: "."
 navbar:
   title: "City Pop+ Server Census 2023"
   right:
-    - text: "Home"
+    - text: "Main"
       href: index.html
+    - text: "Just for fun"
+      href: bivariates.html
     - text: "Site info"
       href: about.html
 output:
