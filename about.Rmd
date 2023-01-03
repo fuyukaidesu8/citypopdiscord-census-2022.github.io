@@ -1,0 +1,10 @@
+---
+title: "About this website"
+output: html_document
+---
+
+This website was built using R Markdown by fuyu for the City Pop+ Discord server. Join here: https://discord.gg/pN2fST6
+
+Data collection by LeaderOfTheBunch.
+
+Please excuse the basic presentation as I am still getting used to R.

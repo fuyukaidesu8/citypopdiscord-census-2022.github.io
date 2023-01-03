@@ -1,0 +1,12 @@
+name: "City Pop+ Server Census 2023"
+output_dir: "."
+navbar:
+  title: "City Pop+ Server Census 2023"
+  right:
+    - text: "Home"
+      href: index.html
+    - text: "Site info"
+      href: about.html
+output:
+  html_document:
+    theme: cosmo
