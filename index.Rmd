@@ -929,6 +929,8 @@ ggsave("./plots/18 chart_other.png", width = 8, height = 6)
 # Shenanigans and tomfoolery
 
 ## Fave emote
+
+![](images/emotes.png)
 ```{r graph_fave_emote, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 graph_fave_emote = census %>% 
   group_by(fave_emote) %>% 
@@ -974,6 +976,8 @@ ggsave("./plots/19 fave_emote.png", width = 8, height = 6)
 ```
 
 ## Fave sticker
+
+![](images/stickers.png)
 ```{r graph_fave_sticker, cache=TRUE, echo=FALSE, warning=FALSE, message=FALSE}
 graph_fave_sticker = census %>% 
   group_by(fave_sticker) %>% 
